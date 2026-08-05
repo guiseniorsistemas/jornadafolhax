@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/colors_and_type.css">
+<link rel="stylesheet" href="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/ui_kits/sds-desktop/sds-desktop.css">
+<script src="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</helmet>
+<div style="overflow-x:auto;">
+  <table class="sds-table">
+    <thead>
+      <tr>
+        <th style="width:46px;"><div class="cb"></div></th>
+        <sc-for list="{{ cols }}" as="c" hint-placeholder-count="7">
+          <th class="sortable">{{ c }} <i class="fa-solid fa-sort sortarrow"></i></th>
+        </sc-for>
+        <th>Status</th>
+        <th style="width:120px;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ rows }}" as="r" hint-placeholder-count="10">
+        <tr class="{{ r.rowClass }}">
+          <td><div class="cb {{ r.cbClass }}"><i class="fa-solid fa-check"></i></div></td>
+          <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="7">
+            <td>{{ cell }}</td>
+          </sc-for>
+          <td><span class="badge {{ r.badgeClass }}">{{ r.status }}</span></td>
+          <td style="position:relative;">
+            <button class="btn btn-default btn-small" data-hs="{{ r.hs }}" onClick="{{ r.onAcoes }}" style="min-width:96px; justify-content:space-between; cursor:{{ r.cursor }};">Ações <i class="fa-solid fa-caret-down"></i></button>
+            <sc-if value="{{ r.open }}" hint-placeholder-val="{{ false }}">
+              <div class="menu" style="position:absolute; top:44px; right:10px; z-index:20; min-width:220px;">
+                <sc-for list="{{ r.items }}" as="mi" hint-placeholder-count="3">
+                  <div class="menu-item" data-hs="{{ mi.hs }}" onClick="{{ mi.onPick }}" style="cursor:{{ mi.cursor }}; color:{{ mi.color }};">{{ mi.label }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:520},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;{cells:string[],status:string}&gt;&quot;},&quot;interactive&quot;:{&quot;editor&quot;:null,&quot;default&quot;:[0,1],&quot;tsType&quot;:&quot;number[]&quot;},&quot;onAction&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(label:string,index:number)=&gt;void&quot;}}">
+const COLS = ['Código da empresa','Nome da empresa','Código do colaborador','Nome do colaborador','Data de demissão','Causa de rescisão','Data do aviso'];
+const MENUS = {
+  Programada: ['Editar','Excluir','Calcular'],
+  Calculada: ['Demonstrativo de rescisão','Excluir cálculo','Rescisão complementar']
+};
+// só estas ações avançam a navegação do protótipo
+const LIVE = ['Calcular','Demonstrativo de rescisão'];
+
+class Component extends DCLogic {
+  state = { open: -1 };
+
+  componentDidUpdate(prev) {
+    if (prev.rows !== this.props.rows && this.state.open !== -1) this.setState({ open: -1 });
+  }
+
+  renderVals() {
+    const openIdx = this.state.open;
+    const interactive = this.props.interactive ?? [0, 1];
+    const onAction = this.props.onAction;
+
+    const rows = (this.props.rows || []).map((r, idx) => {
+      const can = interactive.indexOf(idx) !== -1;
+      const open = can && openIdx === idx;
+      const labels = MENUS[r.status] || [];
+      return {
+        cells: r.cells,
+        status: r.status,
+        rowClass: open ? 'selected' : '',
+        cbClass: open ? 'checked' : '',
+        badgeClass: r.status === 'Calculada' ? 'yellow' : 'blue',
+        cursor: can ? 'pointer' : 'default', hs: can ? '1' : null,
+        open,
+        onAcoes: can ? () => this.setState(s => ({ open: s.open === idx ? -1 : idx })) : () => {},
+        items: labels.map(label => {
+          const live = LIVE.indexOf(label) !== -1;
+          return {
+            label,
+            cursor: live ? 'pointer' : 'default', hs: live ? '1' : null,
+            color: live ? 'var(--sds-fg-default)' : 'var(--sds-fg-muted)',
+            onPick: live && onAction ? () => { this.setState({ open: -1 }); onAction(label, idx); } : () => {}
+          };
+        })
+      };
+    });
+    return { cols: COLS, rows };
+  }
+}
+
+</script>
+</body>
+</html>

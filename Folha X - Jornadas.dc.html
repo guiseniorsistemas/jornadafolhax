@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/colors_and_type.css">
+<link rel="stylesheet" href="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/ui_kits/sds-desktop/sds-desktop.css">
+<script src="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+  html, body { margin:0; padding:0; height:100%; background:#22252b; }
+  * { box-sizing:border-box; }
+  a { color:var(--sds-primary); text-decoration:none; }
+  a:hover { color:var(--sds-primary-hover); }
+  ::-webkit-scrollbar { width:10px; height:10px; }
+  ::-webkit-scrollbar-thumb { background:#c9c9d1; border-radius:5px; }
+</style>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#428BCA"/><g fill="#fff"><rect x="60" y="62" width="80" height="12" rx="3"/><rect x="60" y="86" width="80" height="12" rx="3"/><rect x="60" y="110" width="52" height="12" rx="3"/><circle cx="130" cy="132" r="10"/></g></svg>
+</template>
+</helmet>
+
+<div style="position:fixed; inset:0; display:flex; flex-direction:column; font-family:var(--sds-font-family); color:var(--sds-fg-default); background:#22252b; overflow:hidden;">
+
+  <div style="flex:1; min-height:0; display:flex;">
+
+    <div class="sds-navbar" style="flex-shrink:0; height:100%; min-height:0; position:relative;">
+      <div class="nav-brand" data-hs="1" onClick="{{ toggleMenu }}" style="cursor:pointer;"><span class="nav-favicon"><img src="assets/senior-glyph.svg" alt="Senior" style="height:30px; width:auto;"></span></div>
+      <div class="nav-items">
+        <div class="nav-item"><i class="fa-regular fa-circle-user"></i></div>
+        <div class="nav-item" style="position:relative;"><i class="fa-regular fa-bell"></i><span style="position:absolute; top:10px; left:33px; background:var(--sds-criticality-red); color:#fff; font-size:9px; line-height:1; padding:2px 4px; border-radius:8px;">3</span></div>
+        <div class="nav-item"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-star"></i></div>
+        <div class="nav-item"><i class="fa-regular fa-file-lines"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-box-archive"></i></div>
+        <div class="nav-item {{ railActiveClass }}" data-hs="1" onClick="{{ toggleMenu }}" style="cursor:pointer;"><i class="fa-solid fa-people-group"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-truck"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-briefcase"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-shop"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-flask"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-bullseye"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-cart-shopping"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-share-nodes"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-desktop"></i></div>
+        <div class="nav-item"><i class="fa-solid fa-graduation-cap"></i></div>
+      </div>
+      <div class="nav-footer"><div class="nav-more"><i class="fa-solid fa-ellipsis" style="color:#fff;"></i></div><div class="nav-sara"></div></div>
+    </div>
+
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ true }}">
+      <div style="width:300px; background:var(--sds-navbar-bg); flex-shrink:0; display:flex; flex-direction:column;">
+        <div style="height:var(--sds-navbar-w); background:var(--sds-navbar-brand-bg); display:flex; align-items:center; justify-content:center;">
+          <img src="assets/logo-senior.svg" alt="Senior" style="height:24px; width:auto;">
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; padding:18px 20px; color:#fff; font-size:13px; font-weight:700;">
+          <i class="fa-solid fa-people-group" style="font-size:18px; opacity:.9;"></i> Gestão de Pessoas | HCM
+        </div>
+        <div style="display:flex; align-items:center; padding:8px 20px 16px; border-bottom:1px solid var(--sds-navbar-bg-hover);">
+          <i data-hs="1" onClick="{{ menuBack }}" class="fa-solid fa-chevron-left" style="color:#fff; font-size:14px; cursor:pointer; padding:4px;"></i>
+          <div style="flex:1; text-align:center; color:#fff; font-size:14px;">{{ menuTitle }}</div>
+        </div>
+        <div style="flex:1; overflow-y:auto; padding-top:4px;">
+          <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="9">
+            <div data-hs="1" onClick="{{ mi.onClick }}" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px; color:#fff; font-size:14px; cursor:pointer; background:{{ mi.bg }};" style-hover="background:var(--sds-navbar-bg-hover);">
+              <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ mi.label }}</span>
+              <sc-if value="{{ mi.isBranch }}" hint-placeholder-val="{{ true }}">
+                <i class="fa-solid fa-chevron-right" style="font-size:12px; opacity:.9; flex-shrink:0;"></i>
+              </sc-if>
+              <sc-if value="{{ mi.isLeaf }}" hint-placeholder-val="{{ false }}">
+                <i class="fa-regular fa-star" style="font-size:14px; opacity:.9; flex-shrink:0;"></i>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="flex:1; min-width:0; background:var(--sds-bg-page); display:flex; flex-direction:column; overflow:hidden;">
+      <div class="sds-topbar"><span class="title-module">Gestão de Pessoas</span></div>
+      <div style="flex:1; overflow-y:auto;">
+
+        <sc-if value="{{ s.home }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:48px 56px;">
+            <div style="font-family:Inter,var(--sds-font-family); font-size:28px; color:var(--sds-fg-default); margin-bottom:6px;">Folha de Pagamento X</div>
+            <div style="font-size:14px; color:var(--sds-fg-muted); margin-bottom:32px;">Escolha uma jornada abaixo ou navegue pelo menu lateral.</div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; max-width:1100px;">
+              <sc-for list="{{ journeys }}" as="j" hint-placeholder-count="15">
+                <div data-hs="1" onClick="{{ j.onClick }}" style="background:var(--sds-bg-surface); border:1px solid var(--sds-border-subtle); border-radius:4px; padding:20px; cursor:pointer; opacity:{{ j.opacity }};" style-hover="border-color:var(--sds-primary);">
+                  <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+                    <div style="width:32px; height:32px; border-radius:4px; background:var(--sds-badge-blue-bg); color:var(--sds-primary); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">{{ j.num }}</div>
+                    <div style="font-size:14px; font-weight:700; color:var(--sds-fg-default);">{{ j.name }}</div>
+                  </div>
+                  <div style="font-size:12px; color:var(--sds-fg-muted); line-height:1.5;">{{ j.desc }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.todo }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>{{ todoTitle }}</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel">
+              <div class="empty-state"><div class="icon"><i class="fa-regular fa-folder-open"></i></div><h3>Tela ainda não montada</h3><p>Esta etapa da jornada será construída na próxima rodada.</p></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.r3 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Programações de rescisão</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de programações de rescisão</span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.r4 }}">Adicionar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Editar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+                <button class="btn btn-secondary">Recarregar</button>
+              </div>
+              <dc-import name="TabelaRescisao" rows="{{ rescisaoRows }}" interactive="{{ rescInteractive }}" on-action="{{ onRescAction }}" hint-size="100%,520px"></dc-import>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.r4 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Programações de rescisão</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Programações de rescisão</a></div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Programação de rescisão</span></div>
+              <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:18px 20px;">
+                <sc-for list="{{ formRescisao }}" as="f" hint-placeholder-count="25">
+                  <div class="field">
+                    <div class="label" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ f.labelText }}<sc-if value="{{ f.required }}" hint-placeholder-val="{{ false }}"><span class="req"> *</span></sc-if></div>
+                    <div class="input-shell {{ f.shellClass }}">
+                      <input readOnly="{{ true }}" value="{{ f.value }}" style="text-align:{{ f.textAlign }};">
+                      <sc-if value="{{ f.affixSearch }}" hint-placeholder-val="{{ false }}">
+                        <span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span>
+                      </sc-if>
+                      <sc-if value="{{ f.affixDate }}" hint-placeholder-val="{{ false }}">
+                        <span class="affix"><i class="fa-regular fa-calendar-days"></i></span>
+                      </sc-if>
+                      <sc-if value="{{ f.affixCaret }}" hint-placeholder-val="{{ false }}">
+                        <div class="caret"><i class="fa-solid fa-caret-down"></i></div>
+                      </sc-if>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex; gap:60px; margin-top:24px;">
+                <div>
+                  <div style="font-size:13px; margin-bottom:8px;">Pagar multa de férias em dobro</div>
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <div class="sw on"></div>
+                    <span style="font-size:13px;">Sim</span>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:13px; margin-bottom:8px;">Status</div>
+                  <span class="badge blue">Programada</span>
+                </div>
+              </div>
+              <div style="font-size:12px; color:var(--sds-fg-subtle); margin:22px 0 18px; border-top:1px solid var(--sds-border-subtle); padding-top:16px;">Criado por usuario@empresa.com.br em 29/07/2026 07:36:11 às 29/07/2026 07:36:11. Atualizado por usuario@empresa.com.br em 29/07/2026 07:36:11 às 29/07/2026 07:36:11.</div>
+              <div style="display:flex; gap:10px; align-items:center;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.r5 }}">Salvar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+                <button class="btn btn-secondary" data-hs="1" onClick="{{ nav.r5 }}">Calcular</button>
+                <button class="btn btn-tertiary" data-hs="1" onClick="{{ nav.r5 }}">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.r5 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Programações de rescisão</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de programações de rescisão</span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary">Adicionar</button>
+                <button class="btn btn-secondary">Editar</button>
+                <button class="btn btn-secondary">Excluir</button>
+                <button class="btn btn-secondary">Recarregar</button>
+              </div>
+              <dc-import name="TabelaRescisao" rows="{{ rescisaoRows }}" interactive="{{ rescInteractive }}" on-action="{{ onRescAction }}" hint-size="100%,520px"></dc-import>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.r6 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Programações de rescisão</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de programações de rescisão</span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary">Adicionar</button>
+                <button class="btn btn-secondary">Editar</button>
+                <button class="btn btn-secondary">Excluir</button>
+                <button class="btn btn-secondary">Recarregar</button>
+              </div>
+              <dc-import name="TabelaRescisao" rows="{{ rescisaoRowsCalc }}" interactive="{{ rescInteractive }}" on-action="{{ onRescAction }}" hint-size="100%,520px"></dc-import>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.demo }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Demonstrativo de rescisão</h1></div>
+            <div style="font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Demonstrativo de rescisão</a></div>
+
+            <div class="panel" style="display:flex; align-items:flex-start; gap:28px; margin-bottom:16px;">
+              <div style="width:74px; height:74px; border-radius:50%; background:var(--sds-border-subtle); display:flex; align-items:center; justify-content:center; color:#a8a8b4; font-size:34px; flex-shrink:0;"><i class="fa-solid fa-user"></i></div>
+              <div style="min-width:230px;">
+                <div style="font-size:15px; font-weight:700;">1234 - Colaborador 01</div>
+                <div style="font-size:13px; color:var(--sds-fg-muted); margin-top:4px;">1 - Empresa 01</div>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,minmax(170px,1fr)); gap:16px 24px; flex:1;">
+                <sc-for list="{{ demoHeader }}" as="h" hint-placeholder-count="7">
+                  <div class="lv lv-vertical"><span class="k">{{ h.label }}</span><span class="v">{{ h.value }}</span></div>
+                </sc-for>
+              </div>
+              <i class="fa-solid fa-plus" style="color:var(--sds-fg-muted);"></i>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <span class="title">Detalhes do demonstrativo de rescisão</span>
+                <button class="btn btn-primary" style="white-space:nowrap;"><i class="fa-solid fa-plus"></i>Manutenção de multa do FGTS</button>
+              </div>
+              <div class="tabs" style="padding:0; margin-bottom:8px;"><div class="tab active">Eventos</div><div class="tab">Médias</div><div class="tab">Apuração de horas</div></div>
+
+              <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                <thead>
+                  <tr style="border-bottom:1px solid var(--sds-border-subtle);">
+                    <th style="width:60px;"></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700;">Evento <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:200px;">Tipo</th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Referência <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Proventos <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Descontos <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ demoRows }}" as="e" hint-placeholder-count="12">
+                    <tr style="border-bottom:1px solid var(--sds-bg-hover); background:{{ e.bg }};">
+                      <td style="padding:12px 8px; text-align:center; color:var(--sds-fg-muted);"><span data-hs="{{ e.hs }}" onClick="{{ e.onToggle }}" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:24px; border-radius:3px; cursor:{{ e.toggleCursor }}; background:{{ e.toggleHl }};" style-hover="background:var(--sds-border-subtle);">{{ e.toggle }}</span></td>
+                      <td style="padding:12px 8px; padding-left:{{ e.indent }}; font-weight:{{ e.weight }};">{{ e.name }}</td>
+                      <td><span class="badge {{ e.badgeClass }}" style="display:{{ e.badgeDisplay }};">{{ e.tipo }}</span></td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.ref }}</td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.prov }}</td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.desc }}</td>
+                    </tr>
+                    <sc-if value="{{ e.detail }}" hint-placeholder-val="{{ false }}">
+                      <tr>
+                        <td colspan="6" style="background:#e9e9ec; padding:18px 24px;">
+                          <div style="display:grid; grid-template-columns:120px 1fr 1fr; gap:14px 20px; font-size:13px;">
+                            <div style="font-weight:700;">Regra:</div><div>{{ e.detail.regra }}</div>
+                            <div><span style="font-weight:700; margin-right:12px;">Característica:</span>{{ e.detail.caract }}</div>
+                            <div style="font-weight:700;">Base:</div><div>Acumulador &nbsp;&nbsp; {{ e.detail.base }}</div>
+                            <div>Valor do evento &nbsp;&nbsp;&nbsp; {{ e.detail.valor }}</div>
+                            <div style="font-weight:700;">Fórmula:</div><div style="grid-column:span 2;">{{ e.detail.formula }}</div>
+                            <div></div><div>{{ e.detail.conta }}</div><div>No resultado do cálculo é aplicado o arredondamento</div>
+                            <div style="font-weight:700;">Total:</div><div>{{ e.detail.total }}</div><div></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </sc-if>
+                  </sc-for>
+                </tbody>
+              </table>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">50 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">8 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+
+            <sc-if value="{{ s.r9 }}" hint-placeholder-val="{{ false }}">
+              <div class="panel" style="margin-top:16px;">
+                <div class="grid grid-3" style="padding-bottom:22px; border-bottom:1px solid var(--sds-border-subtle);">
+                  <div class="stat regular">
+                    <div class="stat-iconbox" style="background:var(--sds-criticality-green); color:#fff;"><i class="fa-solid fa-circle-plus"></i></div>
+                    <div class="stat-txt"><div class="stat-title">Proventos (+)</div><div class="stat-value">533,33</div></div>
+                  </div>
+                  <div class="stat regular">
+                    <div class="stat-iconbox" style="background:var(--sds-criticality-red); color:#fff;"><i class="fa-solid fa-circle-minus"></i></div>
+                    <div class="stat-txt"><div class="stat-title">Descontos (-)</div><div class="stat-value">239,99</div></div>
+                  </div>
+                  <div class="stat regular">
+                    <div class="stat-iconbox" style="background:var(--sds-primary); color:#fff;"><i class="fa-solid fa-dollar-sign"></i></div>
+                    <div class="stat-txt"><div class="stat-title">Total líquido (a receber)</div><div class="stat-value">293,34</div></div>
+                  </div>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px 24px; padding:22px 0;">
+                  <sc-for list="{{ demoBases }}" as="b" hint-placeholder-count="9">
+                    <div class="lv lv-vertical"><span class="k">{{ b.label }}</span><span class="v">{{ b.value }}</span></div>
+                  </sc-for>
+                </div>
+                <div style="border-top:1px solid var(--sds-border-subtle); padding-top:16px;"><a href="#" data-hs="1" onClick="{{ nav.home }}" style="font-size:13px;">Cancelar</a></div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+
+        <sc-if value="{{ s.calc }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px; position:relative;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Calcular folha</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Calcular folha</span></div>
+              <div class="field" style="max-width:860px;">
+                <div class="label">Definição de cálculo<span class="req"> *</span> <i class="fa-solid fa-circle-info" style="color:var(--sds-fg-muted); margin-left:4px;"></i></div>
+                <div class="input-shell">
+                  <input readOnly="{{ true }}" value="21129 - Folha mensal - 1 - Empresa 01 - 03/2026">
+                  <span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </div>
+              </div>
+              <div class="panel-header" style="margin-top:26px;"><span class="title">Filtros</span></div>
+              <div style="display:flex; margin-bottom:22px;">
+                <div style="background:var(--sds-primary); color:#fff; font-size:13px; padding:9px 26px; border-radius:3px 0 0 3px;">Filtro simples</div>
+                <div style="border:1px solid var(--sds-border-default); border-left:0; color:var(--sds-fg-default); font-size:13px; padding:9px 26px; border-radius:0 3px 3px 0;">Filtro avançado</div>
+              </div>
+              <div class="field" style="max-width:860px;">
+                <div class="label">Colaboradores</div>
+                <div class="input-shell">
+                  <input readOnly="{{ true }}" value="">
+                  <span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </div>
+              </div>
+              <div style="display:flex; gap:16px; align-items:center; border-top:1px solid var(--sds-border-subtle); margin-top:26px; padding-top:18px;">
+                <button class="btn btn-primary" data-hs="{{ processarHs }}" onClick="{{ nav.f2 }}" disabled="{{ s.calcModal }}">Processar</button>
+                <a href="#" style="font-size:13px;">Limpar</a>
+              </div>
+            </div>
+          </div>
+          <sc-if value="{{ s.calcModal }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; background:rgba(14,17,25,0.45); display:flex; align-items:center; justify-content:center; z-index:60;">
+              <div style="background:var(--sds-bg-surface); border-radius:4px; width:420px; box-shadow:0 6px 18px rgba(0,0,0,0.28);">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px 12px;">
+                  <span style="font-size:15px; color:var(--sds-fg-muted); letter-spacing:0.4px;">CONFIRMAÇÃO</span>
+                  <span data-hs="1" onClick="{{ nav.f1 }}" style="cursor:pointer; color:var(--sds-fg-muted); font-size:18px; line-height:1;">&times;</span>
+                </div>
+                <div style="padding:6px 22px 22px; font-size:13px; line-height:1.6;">
+                  <p style="margin:0 0 16px;">O processo acontecerá em segundo plano, quando concluído informaremos o resultado por notificação.</p>
+                  <p style="margin:0;">Confirma a execução do processo?</p>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid var(--sds-border-subtle); padding:14px 22px;">
+                  <button class="btn btn-secondary" data-hs="1" onClick="{{ nav.f1 }}">Não</button>
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.f1 }}">Sim</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ s.e1 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Definições do eSocial</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de definições do eSocial</span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.e2 }}">Adicionar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Editar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+              </div>
+              <table class="sds-table">
+                <thead>
+                  <tr>
+                    <th style="width:46px;"><div class="cb"></div></th>
+                    <th class="sortable">Empresa <i class="fa-solid fa-sort sortarrow"></i></th>
+                    <th style="width:34%;">Tipo de ambiente</th>
+                    <th style="width:34%;">Grupo de entrada</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ esocDefRows }}" as="r" hint-placeholder-count="3">
+                    <tr>
+                      <td><div class="cb"></div></td>
+                      <td><a href="#">{{ r.empresa }}</a></td>
+                      <td>{{ r.ambiente }}</td>
+                      <td>{{ r.grupo }}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">10 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">3 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.esocDef }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Definições do eSocial</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Definições do eSocial</a></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header"><span class="title">Definição do eSocial</span><div class="actions">&minus;</div></div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px 24px;">
+                <div class="field">
+                  <div class="label">Empresa<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="1 - Empresa 01"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Tipo de ambiente<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="Produção restrita"><span class="affix"><i class="fa-solid fa-caret-down"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Grupo de entrada<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="Grandes empresas"><span class="affix"><i class="fa-solid fa-caret-down"></i></span></div>
+                </div>
+              </div>
+              <div style="font-size:12px; color:var(--sds-fg-subtle); margin:18px 0 0; line-height:1.7;">Criado por usuario@empresa.com.br em 15/12/2025 às 10:52.<br>Atualizado por usuario@empresa.com.br em 15/12/2025 às 11:32.</div>
+              <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); margin-top:18px; padding-top:18px;">
+                <button class="btn btn-primary" data-hs="{{ esocTopSaveHs }}" onClick="{{ nav.e1 }}">Salvar</button>
+                <a href="#" onClick="{{ nav.e1 }}" style="font-size:13px;">Cancelar</a>
+                <div style="flex:1;"></div>
+                <button class="btn btn-primary">Carga de tabelas</button>
+                <button class="btn btn-primary">Carga de não periódicos</button>
+                <button class="btn btn-primary">Excluir dados da Produção Restrita</button>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header"><span class="title">Detalhes da definição do eSocial</span><div class="actions">&minus;</div></div>
+              <div class="tabs" style="padding:0; margin-bottom:8px;">
+                <sc-for list="{{ esocTabs }}" as="t" hint-placeholder-count="4">
+                  <div class="tab {{ t.cls }}" data-hs="{{ t.hs }}" onClick="{{ t.onClick }}" style="cursor:pointer;">{{ t.label }}</div>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ s.e2 }}" hint-placeholder-val="{{ false }}">
+                <table class="sds-table">
+                  <thead><tr><th>Leiaute</th><th style="width:40%;">Envio automático <i class="fa-solid fa-circle-info" style="color:var(--sds-fg-muted); font-size:11px;"></i></th></tr></thead>
+                  <tbody>
+                    <sc-for list="{{ esocLayouts }}" as="l" hint-placeholder-count="5">
+                      <tr><td>{{ l }}</td><td><div class="cb"></div></td></tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </sc-if>
+
+              <sc-if value="{{ s.e3 }}" hint-placeholder-val="{{ false }}">
+                <div class="field" style="max-width:860px; margin-top:16px;">
+                  <div class="label">Identificador da empresa <i class="fa-solid fa-circle-info" style="color:var(--sds-fg-muted); margin-left:4px;"></i></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="EMPRESA01"></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ s.e4 }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:16px;">
+                  <div>
+                    <div style="font-size:13px; margin-bottom:10px;">Enviar observação do evento</div>
+                    <div class="sw"></div>
+                  </div>
+                  <div>
+                    <div style="font-size:13px; margin-bottom:10px;">Enviar horário contratual</div>
+                    <div class="sw"></div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ s.e5 }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; gap:10px; padding:18px 0;">
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.e6 }}">Adicionar</button>
+                  <button class="btn btn-secondary" disabled="{{ true }}">Editar</button>
+                  <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+                </div>
+                <table class="sds-table">
+                  <thead><tr><th style="width:46px;"><div class="cb"></div></th><th>Data inicial da competência</th><th style="width:50%;">Categoria do eSocial</th></tr></thead>
+                  <tbody><tr><td><div class="cb"></div></td><td><a href="#">01/2026</a></td><td>701</td></tr></tbody>
+                </table>
+              </sc-if>
+
+              <sc-if value="{{ s.esocFormFooter }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); margin-top:22px; padding-top:18px;">
+                  <button class="btn btn-primary" data-hs="{{ esocTabSaveHs }}" onClick="{{ nav.e1 }}">Salvar</button>
+                  <a href="#" onClick="{{ nav.e1 }}" style="font-size:13px;">Cancelar</a>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.e6 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Categorias opcionais</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Definições do eSocial</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Categorias opcionais</a></div>
+            <div class="panel" style="display:flex; align-items:center; gap:28px; margin-bottom:16px;">
+              <div style="width:74px; height:74px; border-radius:50%; background:var(--sds-border-subtle); display:flex; align-items:center; justify-content:center; color:#a8a8b4; font-size:30px; flex-shrink:0;"><i class="fa-solid fa-building"></i></div>
+              <div style="font-size:15px; font-weight:700; min-width:200px;">1 - Empresa 01</div>
+              <div style="border-left:1px solid var(--sds-border-subtle); padding-left:28px; display:flex; gap:56px;">
+                <div class="lv lv-vertical"><span class="k">Tipo de ambiente</span><span class="v">Produção restrita</span></div>
+                <div class="lv lv-vertical"><span class="k">Grupo de entrada</span><span class="v">Grandes empresas</span></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Categorias opcionais</span><div class="actions">&minus;</div></div>
+              <div class="field" style="max-width:420px;">
+                <div class="label">Data inicial da competência<span class="req"> *</span></div>
+                <div class="input-shell"><input readOnly="{{ true }}" value="01/2026"><span class="affix"><i class="fa-regular fa-calendar"></i></span></div>
+              </div>
+              <table class="sds-table" style="margin-top:8px;">
+                <thead><tr><th style="width:46px;"><div class="cb"></div></th><th>Categoria do eSocial</th></tr></thead>
+                <tbody>
+                  <sc-for list="{{ esocCategorias }}" as="c" hint-placeholder-count="7">
+                    <tr style="background:{{ c.bg }};">
+                      <td><div class="cb"><sc-if value="{{ c.checked }}" hint-placeholder-val="{{ false }}"><i class="fa-solid fa-check"></i></sc-if></div></td>
+                      <td>{{ c.label }}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <div style="font-size:12px; color:var(--sds-fg-subtle); margin:18px 0 0;">Criado por usuario@empresa.com.br em 02/07/2026 às 09:08. Atualizado por usuario@empresa.com.br em 02/07/2026 às 09:08.</div>
+              <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); margin-top:18px; padding-top:18px;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.e5 }}">Salvar</button>
+                <a href="#" onClick="{{ nav.e5 }}" style="font-size:13px;">Cancelar</a>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.ed1 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Definições do eDocs</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de definições do eDocs</span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.ed2 }}">Adicionar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Editar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+              </div>
+              <table class="sds-table">
+                <thead><tr><th style="width:46px;"><div class="cb"></div></th><th class="sortable">Nome da definição <i class="fa-solid fa-sort sortarrow"></i></th><th class="sortable" style="width:50%;">CNPJ/CPF do certificado digital <i class="fa-solid fa-sort sortarrow"></i></th></tr></thead>
+                <tbody>
+                  <sc-for list="{{ edocsRows }}" as="r" hint-placeholder-count="2">
+                    <tr><td><div class="cb"></div></td><td><a href="#">{{ r.nome }}</a></td><td>{{ r.cnpj }}</td></tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">10 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">2 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.edocsForm }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px; position:relative;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Definições do eDocs</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Definições do eDocs</a></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header"><span class="title">Definição do eDocs</span><div class="actions">&minus;</div></div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px 24px;">
+                <div class="field">
+                  <div class="label">Nome da definição<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="Empresa 01"></div>
+                </div>
+                <div class="field">
+                  <div class="label">URL<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="https://edocs.exemplo.com.br:8989/SDE/Integracao?wsdl"></div>
+                </div>
+                <div class="field">
+                  <div class="label">Usuário<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="edocs@empresa.com.br"></div>
+                </div>
+                <div class="field">
+                  <div class="label">Senha<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="••••••••"></div>
+                </div>
+                <div class="field">
+                  <div class="label">CNPJ/CPF do certificado digital<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="00.000.000/0001-00"></div>
+                </div>
+              </div>
+              <div style="font-size:12px; color:var(--sds-fg-subtle); margin:18px 0 0;">Criado por usuario@empresa.com.br em 02/07/2026 às 09:15. Atualizado por usuario@empresa.com.br em 02/07/2026 às 09:15.</div>
+              <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); margin-top:18px; padding-top:18px;">
+                <button class="btn btn-primary" data-hs="{{ edocsSaveHs }}" onClick="{{ nav.ed1 }}">Salvar</button>
+                <a href="#" onClick="{{ nav.ed1 }}" style="font-size:13px;">Cancelar</a>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de empresas</span><div class="actions">&minus;</div></div>
+              <div class="field" style="max-width:860px;">
+                <div class="label">Empresa</div>
+                <div class="input-shell"><input readOnly="{{ true }}" value=""><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px;">
+                <button class="btn btn-primary">Filtrar</button>
+                <a href="#" style="font-size:13px;">Limpar</a>
+              </div>
+              <sc-if value="{{ s.ed4 }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; gap:10px; padding:18px 0;">
+                  <button class="btn btn-primary">Adicionar</button>
+                  <button class="btn btn-secondary" disabled="{{ true }}">Editar</button>
+                  <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+                </div>
+                <table class="sds-table">
+                  <thead><tr><th style="width:46px;"><div class="cb"></div></th><th class="sortable">Empresa <i class="fa-solid fa-sort sortarrow"></i></th></tr></thead>
+                  <tbody><tr><td><div class="cb"></div></td><td><a href="#">1 - Empresa 01</a></td></tr></tbody>
+                </table>
+              </sc-if>
+              <sc-if value="{{ s.edocsEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:10px; padding:40px 0 28px;">
+                  <i class="fa-solid fa-inbox" style="font-size:56px; color:#d5d5dd;"></i>
+                  <div style="font-size:14px; font-weight:700;">Nenhum resultado encontrado</div>
+                  <div style="font-size:13px; color:var(--sds-fg-muted);">Não há registros cadastrados até o momento.</div>
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.ed3 }}" style="margin-top:8px;">Adicionar</button>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+          <sc-if value="{{ s.ed3 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; background:rgba(14,17,25,0.35); z-index:60; display:flex; justify-content:flex-end;">
+              <div style="background:var(--sds-bg-surface); width:52%; display:flex; flex-direction:column;">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 26px;">
+                  <span style="font-size:15px; color:var(--sds-fg-muted); letter-spacing:0.4px;">DEFINIÇÃO DO EDOCS POR EMPRESA</span>
+                  <span data-hs="1" onClick="{{ nav.ed2 }}" style="cursor:pointer; color:var(--sds-fg-muted); font-size:20px; line-height:1;">&times;</span>
+                </div>
+                <div style="padding:0 26px; flex:1;">
+                  <div class="field">
+                    <div class="label">Empresa<span class="req"> *</span></div>
+                    <div class="input-shell"><input readOnly="{{ true }}" value="1 - Empresa 01"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); padding:16px 26px;">
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.ed4 }}">Salvar</button>
+                  <a href="#" onClick="{{ nav.ed2 }}" style="font-size:13px;">Cancelar</a>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ s.ger }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Geração de leiautes do eSocial</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:14px;"><i class="fa-solid fa-house"></i></div>
+            <div class="tabs" style="padding:0; margin-bottom:16px;">
+              <div class="tab active">Tabelas <span class="badge blue" style="margin-left:8px;">277</span></div>
+              <div class="tab">Não periódico <span class="badge blue" style="margin-left:8px;">137</span></div>
+              <div class="tab">Periódico <span class="badge blue" style="margin-left:8px;">193</span></div>
+            </div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Pendências de geração <i class="fa-solid fa-rotate" style="color:var(--sds-primary); font-size:12px; margin-left:6px;"></i></span></div>
+              <div style="display:flex; align-items:center; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary" data-hs="{{ gerProcHs }}" onClick="{{ nav.home }}" disabled="{{ s.g1 }}">Processar marcados</button>
+                <button class="btn btn-secondary">Processar filtrados</button>
+                <div style="flex:1;"></div>
+                <div style="display:flex; border:1px solid var(--sds-border-default); border-radius:3px; overflow:hidden; font-size:13px;">
+                  <span style="padding:8px 16px; background:var(--sds-bg-hover);">Sintético</span>
+                  <span style="padding:8px 16px; border-left:1px solid var(--sds-border-default);">Analítico</span>
+                </div>
+              </div>
+              <table class="sds-table">
+                <thead>
+                  <tr>
+                    <th style="width:46px;"><div class="cb"></div></th>
+                    <th class="sortable">Leiaute <i class="fa-solid fa-sort sortarrow"></i></th>
+                    <th class="sortable">Empresa <i class="fa-solid fa-sort sortarrow"></i></th>
+                    <th>Aguardando</th><th>Processando</th><th>Com dependência</th><th>Com erro</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ gerRows }}" as="r" hint-placeholder-count="8">
+                    <tr>
+                      <td><div class="cb" data-hs="{{ r.hs }}" onClick="{{ r.onToggle }}" style="cursor:{{ r.cursor }};"><sc-if value="{{ r.checked }}" hint-placeholder-val="{{ false }}"><i class="fa-solid fa-check"></i></sc-if></div></td>
+                      <td>{{ r.leiaute }}</td>
+                      <td><a href="#">{{ r.empresa }}</a></td>
+                      <td>{{ r.aguardando }}</td><td>{{ r.processando }}</td>
+                      <td><a href="#">{{ r.dependencia }}</a></td><td><a href="#">{{ r.erro }}</a></td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">10 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">8 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.env }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Envio de leiautes</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Leiautes <i class="fa-solid fa-rotate" style="color:var(--sds-primary); font-size:12px; margin-left:6px;"></i></span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary" disabled="{{ true }}">Enviar leiautes pendentes</button>
+              </div>
+              <div style="overflow-x:auto;">
+                <table class="sds-table">
+                  <thead>
+                    <tr>
+                      <th style="width:46px;"><div class="cb"></div></th>
+                      <th class="sortable">Leiaute <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable" style="min-width:150px;">Data da criação <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th style="min-width:130px;">Indicativo de apuração</th>
+                      <th class="sortable" style="min-width:120px;">Data da referência <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable" style="min-width:120px;">Empresa <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable" style="min-width:140px;">Colaborador <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th style="min-width:160px;">Resumo</th>
+                      <th style="min-width:150px;">Situação</th>
+                      <th style="width:110px;">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ envRows }}" as="r" hint-placeholder-count="7">
+                      <tr style="background:{{ r.bg }};">
+                        <td><div class="cb" data-hs="{{ r.cbHs }}" onClick="{{ r.onToggle }}" style="cursor:{{ r.cursor }};"></div></td>
+                        <td>{{ r.leiaute }}</td><td>{{ r.criacao }}</td><td>{{ r.indicativo }}</td><td>{{ r.referencia }}</td>
+                        <td>{{ r.empresa }}</td><td>{{ r.colaborador }}</td><td>{{ r.resumo }}</td>
+                        <td><span class="badge {{ r.badgeClass }}">{{ r.situacao }}</span></td>
+                        <td><button class="btn btn-default btn-small" data-hs="{{ r.detHs }}">Detalhes</button></td>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 12px; color:var(--sds-primary);">2</span>
+                  <span style="padding:6px 12px; color:var(--sds-primary);">3</span>
+                  <span style="padding:6px 12px; color:var(--sds-primary);">4</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">10 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">34 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.fech }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px; position:relative;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Fechamento/Reabertura de periódicos</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de fechamentos de periódicos</span></div>
+              <div style="display:flex; align-items:center; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary">Editar</button>
+                <button class="btn btn-secondary" data-hs="{{ fecharHs }}" onClick="{{ nav.fc2 }}">Fechar período(s)</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Reabrir período(s)</button>
+                <div style="flex:1;"></div>
+                <span style="border:1px solid var(--sds-border-default); border-radius:3px; padding:8px 14px; font-size:13px; display:flex; align-items:center; gap:44px;">8 colunas selecionadas <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+              </div>
+              <div style="overflow-x:auto;">
+                <table class="sds-table">
+                  <thead>
+                    <tr>
+                      <th style="width:46px;"><div class="cb"></div></th>
+                      <th class="sortable">Empresa <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable">Código da empresa <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable">Competência <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable">Tipo de folha <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable" style="white-space:normal; min-width:110px;">Indicador de remuneração <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable" style="white-space:normal; min-width:110px;">Indicador de pagamento <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable" style="white-space:normal; min-width:110px;">Informações complementares <i class="fa-solid fa-sort sortarrow"></i></th>
+                      <th class="sortable" style="min-width:150px;">Status <i class="fa-solid fa-sort sortarrow"></i></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ fechRows }}" as="r" hint-placeholder-count="10">
+                      <tr style="background:{{ r.bg }};">
+                        <td><div class="cb"><sc-if value="{{ r.checked }}" hint-placeholder-val="{{ false }}"><i class="fa-solid fa-check"></i></sc-if></div></td>
+                        <td>{{ r.empresa }}</td><td>{{ r.codigo }}</td><td>{{ r.competencia }}</td><td>{{ r.tipo }}</td>
+                        <td>{{ r.remuneracao }}</td><td>{{ r.pagamento }}</td><td>{{ r.complementares }}</td>
+                        <td><span class="badge {{ r.badgeClass }}">{{ r.status }}</span></td>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 12px; color:var(--sds-primary);">2</span>
+                  <span style="padding:6px 12px; color:var(--sds-primary);">3</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">10 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">26 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+          <sc-if value="{{ s.fc2 }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; inset:0; background:rgba(14,17,25,0.45); display:flex; align-items:center; justify-content:center; z-index:60;">
+              <div style="background:var(--sds-bg-surface); border-radius:4px; width:420px; box-shadow:0 6px 18px rgba(0,0,0,0.28);">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:18px 22px 12px;">
+                  <span style="font-size:15px; color:var(--sds-fg-muted); letter-spacing:0.4px;">DESEJA CONTINUAR?</span>
+                  <span data-hs="1" onClick="{{ nav.fc1 }}" style="cursor:pointer; color:var(--sds-fg-muted); font-size:18px; line-height:1;">&times;</span>
+                </div>
+                <div style="padding:6px 22px 22px; font-size:13px; line-height:1.6;">Será criada uma pendência para o leiaute S-1299.</div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid var(--sds-border-subtle); padding:14px 22px;">
+                  <button class="btn btn-secondary" data-hs="1" onClick="{{ nav.fc1 }}">Não</button>
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fc3 }}">Sim</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <sc-if value="{{ s.wiipo }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Integração Wiipo</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Integração Wiipo</span></div>
+              <div class="tabs" style="padding:0; margin-bottom:8px;">
+                <sc-for list="{{ wiipoTabs }}" as="t" hint-placeholder-count="5">
+                  <div class="tab {{ t.cls }}" data-hs="{{ t.hs }}" onClick="{{ t.onClick }}" style="cursor:pointer;">{{ t.label }}</div>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ s.w1 }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px 24px; margin-top:16px;">
+                  <div class="field">
+                    <div class="label">Empresa<span class="req"> *</span></div>
+                    <div class="input-shell disabled"><input readOnly="{{ true }}" value="1 - Empresa 01"></div>
+                  </div>
+                  <div class="field">
+                    <div class="label">Nome do usuário<span class="req"> *</span></div>
+                    <div class="input-shell disabled"><input readOnly="{{ true }}" value="Usuário 01"></div>
+                  </div>
+                  <div class="field">
+                    <div class="label">E-mail do usuário<span class="req"> *</span></div>
+                    <div class="input-shell disabled"><input readOnly="{{ true }}" value="usuario@empresa.com.br"></div>
+                  </div>
+                  <div class="field">
+                    <div class="label">Telefone do usuário<span class="req"> *</span></div>
+                    <div class="input-shell disabled"><input readOnly="{{ true }}" value="(47) 90000-0000"></div>
+                  </div>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:18px;">
+                  <div style="font-size:13px; color:var(--sds-fg-muted);">Ativação realizada em: 04/02/2026 às 08:26</div>
+                  <div style="display:flex; align-items:center; gap:10px; font-size:13px; margin-right:auto; margin-left:60px;"><span style="color:var(--sds-fg-muted);">Status</span><span class="badge green">Ativo</span></div>
+                </div>
+                <div style="margin-top:18px;"><button class="btn btn-primary" disabled="{{ true }}">Ativar</button></div>
+              </sc-if>
+
+              <sc-if value="{{ s.w2 }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:20px;"><button class="btn btn-primary">Integrar</button></div>
+              </sc-if>
+
+              <sc-if value="{{ s.w3 }}" hint-placeholder-val="{{ false }}">
+                <div class="field" style="max-width:640px; margin-top:16px;">
+                  <div class="label">Colaborador<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="50 - Empresa 06 - 205230 - Colaborador 14 - Empregado"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                </div>
+                <div><button class="btn btn-primary">Integrar</button></div>
+              </sc-if>
+
+              <sc-if value="{{ s.w4 }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px 24px; margin-top:16px;">
+                  <div class="field">
+                    <div class="label">Colaborador</div>
+                    <div class="input-shell"><input readOnly="{{ true }}" value=""><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                  </div>
+                  <div class="field">
+                    <div class="label">Definição de cálculo<span class="req"> *</span></div>
+                    <div class="input-shell"><input readOnly="{{ true }}" value="30 - Folha mensal"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                  </div>
+                </div>
+                <div><button class="btn btn-primary">Integrar</button></div>
+              </sc-if>
+
+              <sc-if value="{{ s.w5 }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:22px 24px; margin-top:18px;">
+                  <div>
+                    <div style="font-size:13px; margin-bottom:10px;">Integrar FGTS</div>
+                    <div class="sw on"></div>
+                  </div>
+                  <div>
+                    <div style="font-size:13px; margin-bottom:10px;">Integrar informativa</div>
+                    <div class="sw on"></div>
+                  </div>
+                  <div>
+                    <div style="font-size:13px; margin-bottom:10px;">Integrar informativa dedutora</div>
+                    <div class="sw on"></div>
+                  </div>
+                </div>
+                <div style="margin-top:22px;"><button class="btn btn-primary" data-hs="1" onClick="{{ nav.home }}">Salvar</button></div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.cont }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Processamento contábil</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Processamento contábil</span></div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px 24px;">
+                <div class="field">
+                  <div class="label">Empresa<span class="req"> *</span></div>
+                  <div class="input-shell" data-hs="{{ contFillHs }}" onClick="{{ contFill }}"><input readOnly="{{ true }}" value="{{ contEmpresa }}"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Definição de cálculo</div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="{{ contDefinicao }}"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Competência<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="{{ contCompetencia }}"><span class="affix"><i class="fa-regular fa-calendar"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Data de lançamento<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="{{ contData }}"><span class="affix"><i class="fa-regular fa-calendar"></i></span></div>
+                </div>
+              </div>
+              <div style="display:flex; gap:16px; align-items:center; border-top:1px solid var(--sds-border-subtle); margin-top:26px; padding-top:18px;">
+                <button class="btn btn-primary" data-hs="{{ contProcHs }}" onClick="{{ nav.c2 }}" disabled="{{ s.c1 }}">Processar</button>
+                <a href="#" style="font-size:13px;">Limpar</a>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.h1 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Histórico salarial</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Gestão de pessoas</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">HRIS</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Histórico salarial</a></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de históricos salariais</span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.h2 }}">Adicionar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Editar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+                <button class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:18px;">Outras ações <i class="fa-solid fa-caret-down"></i></button>
+              </div>
+              <div style="overflow-x:auto;">
+                <table class="sds-table">
+                  <thead>
+                    <tr>
+                      <th style="width:46px;"><div class="cb"></div></th>
+                      <sc-for list="{{ hsCols }}" as="c" hint-placeholder-count="9">
+                        <th class="sortable" style="white-space:normal; min-width:120px;">{{ c }} <i class="fa-solid fa-sort sortarrow"></i></th>
+                      </sc-for>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ hsRows }}" as="r" hint-placeholder-count="9">
+                      <tr>
+                        <td><div class="cb"></div></td>
+                        <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="9">
+                          <td>{{ cell }}</td>
+                        </sc-for>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">20 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">9 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.h2 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Histórico salarial</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Gestão de pessoas</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">HRIS</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Histórico salarial</a></div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Histórico salarial</span></div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px 24px;">
+                <div class="field">
+                  <div class="label">Colaborador<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="1 - Empresa 01 - 1234 - Colaborador 01 - Empregado"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Data inicial<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="01/07/2026"><span class="affix"><i class="fa-regular fa-calendar"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Sequência<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="1"></div>
+                </div>
+                <div class="field">
+                  <div class="label">Razão do ajuste<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="10 - Mérito"><span class="affix"><i class="fa-solid fa-caret-down"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Data de fechamento do dissídio</div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value=""><span class="affix"><i class="fa-regular fa-calendar"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Tipo do salário<span class="req"> *</span></div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="5 - Por mês"><span class="affix"><i class="fa-solid fa-caret-down"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Salário<span class="req"> *</span></div>
+                  <div class="input-shell"><span class="affix" style="border-right:1px solid var(--sds-border-default); border-left:0; color:var(--sds-fg-muted);">R$</span><input readOnly="{{ true }}" value="2.500,00"></div>
+                </div>
+                <div class="field">
+                  <div class="label">Percentual reajuste</div>
+                  <div class="input-shell disabled"><input readOnly="{{ true }}" value="25,00000"><span class="affix">%</span></div>
+                </div>
+                <div class="field" style="grid-column:span 2;">
+                  <div class="label">Descrição do salário</div>
+                  <div style="border:1px solid var(--sds-border-default); border-radius:3px; height:110px; background:var(--sds-bg-surface);"></div>
+                </div>
+              </div>
+              <div style="display:flex; gap:16px; align-items:center; border-top:1px solid var(--sds-border-subtle); margin-top:26px; padding-top:18px;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.h1 }}">Salvar</button>
+                <a href="#" data-hs="1" onClick="{{ nav.h1 }}" style="font-size:13px;">Cancelar</a>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.dpList }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Demonstrativo de pagamento</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de demonstrativos de pagamento</span></div>
+              <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                <thead>
+                  <tr style="border-bottom:1px solid var(--sds-border-subtle);">
+                    <th style="width:130px;"></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700;">Colaborador <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:170px;">Competência <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:250px;">Definição de cálculo <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:200px;">Empresa <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:200px;">Filial <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:150px; border-left:1px solid var(--sds-border-subtle);">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ dpRows }}" as="r" hint-placeholder-count="6">
+                    <tr style="border-bottom:1px solid var(--sds-bg-hover);">
+                      <td style="padding:14px 8px;">
+                        <div style="width:62px; height:62px; border-radius:50%; background:var(--sds-border-subtle); display:flex; align-items:center; justify-content:center; color:#a8a8b4; font-size:28px; margin:0 auto;"><i class="fa-solid fa-user"></i></div>
+                      </td>
+                      <td style="padding:12px 8px;">
+                        <div style="color:var(--sds-primary); font-weight:700;">{{ r.nome }}</div>
+                        <div style="color:var(--sds-fg-muted); margin-top:3px;">{{ r.cargo }}</div>
+                      </td>
+                      <td style="padding:12px 8px;">{{ r.comp }}</td>
+                      <td style="padding:12px 8px;">{{ r.definicao }}</td>
+                      <td style="padding:12px 8px;">{{ r.empresa }}</td>
+                      <td style="padding:12px 8px;">{{ r.filial }}</td>
+                      <td style="padding:12px 8px; border-left:1px solid var(--sds-border-subtle); position:relative;">
+                        <button class="btn btn-secondary" data-hs="{{ r.hs }}" onClick="{{ r.onAcoes }}" style="display:inline-flex; align-items:center; gap:22px;">Ações <i class="fa-solid fa-caret-down"></i></button>
+                        <sc-if value="{{ r.menuOpen }}" hint-placeholder-val="{{ false }}">
+                          <div style="position:absolute; top:52px; right:8px; background:var(--sds-bg-surface); border:1px solid var(--sds-border-subtle); border-radius:4px; box-shadow:0 4px 2.5px rgba(0,0,0,0.20); min-width:230px; z-index:30; padding:6px 0;">
+                            <div data-hs="1" onClick="{{ nav.d3 }}" style="padding:10px 16px; cursor:pointer; white-space:nowrap;" style-hover="background:var(--sds-bg-hover);">Demonstrativo de pagamento</div>
+                            <div style="padding:10px 16px; cursor:default; white-space:nowrap; color:var(--sds-fg-default);" style-hover="background:var(--sds-bg-hover);">Excluir cálculo</div>
+                          </div>
+                        </sc-if>
+                      </td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">20 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">6 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.dpDetail }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px;">
+              <div>
+                <div class="page-header" style="margin-bottom:8px;"><h1>Demonstrativo de pagamento</h1></div>
+                <div style="font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Demonstrativo de pagamento</a></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:14px; background:var(--sds-primary); color:#fff; border-radius:20px; padding:9px 18px; font-size:13px; white-space:nowrap;">
+                <i class="fa-solid fa-angle-left"></i><span>12345 - Colaborador 01</span><i class="fa-solid fa-angle-right"></i>
+              </div>
+            </div>
+
+            <div class="panel" style="display:flex; align-items:flex-start; gap:28px; margin-bottom:16px;">
+              <div style="width:74px; height:74px; border-radius:50%; background:var(--sds-border-subtle); display:flex; align-items:center; justify-content:center; color:#a8a8b4; font-size:34px; flex-shrink:0;"><i class="fa-solid fa-user"></i></div>
+              <div style="min-width:230px;">
+                <div style="font-size:15px; font-weight:700;">12345 - Colaborador 01</div>
+                <div style="font-size:13px; color:var(--sds-fg-muted); margin-top:4px;">1 - Auxiliar administrativo</div>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,minmax(170px,1fr)); gap:16px 24px; flex:1;">
+                <div class="lv lv-vertical"><span class="k">Definição de cálculo</span><span class="v">21129 - Folha mensal - 03/2026</span></div>
+                <div class="lv lv-vertical"><span class="k">Admissão</span><span class="v">31/07/2025</span></div>
+                <div class="lv lv-vertical"><span class="k">Situação</span><span class="badge yellow" style="align-self:flex-start; margin-top:2px;">Licença maternidade</span></div>
+                <div class="lv lv-vertical"><span class="k">Data de pagamento</span><span class="v">06/04/2026</span></div>
+              </div>
+              <i class="fa-solid fa-plus" style="color:var(--sds-fg-muted);"></i>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <span class="title">Detalhes do demonstrativo de pagamento</span>
+                <div style="display:flex; gap:10px;">
+                  <button class="btn btn-primary" style="white-space:nowrap;"><i class="fa-solid fa-plus"></i>Lançar eventos</button>
+                  <button class="btn btn-primary" style="white-space:nowrap;"><i class="fa-solid fa-play"></i>Recalcular</button>
+                </div>
+              </div>
+              <div class="tabs" style="padding:0; margin-bottom:8px;"><div class="tab active">Ficha financeira</div><div class="tab">Apuração de horas</div><div class="tab">Totalizadores</div><div class="tab">Médias</div></div>
+
+              <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                <thead>
+                  <tr style="border-bottom:1px solid var(--sds-border-subtle);">
+                    <th style="width:60px;"></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700;">Evento <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:200px;">Tipo</th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Referência <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Proventos <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Descontos <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ dpEvents }}" as="e" hint-placeholder-count="7">
+                    <tr style="border-bottom:1px solid var(--sds-bg-hover); background:{{ e.bg }};">
+                      <td style="padding:12px 8px; text-align:center; color:var(--sds-fg-muted);"><span data-hs="{{ e.hs }}" onClick="{{ e.onToggle }}" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:24px; border-radius:3px; cursor:{{ e.toggleCursor }};" style-hover="background:var(--sds-border-subtle);">{{ e.toggle }}</span></td>
+                      <td style="padding:12px 8px;">{{ e.name }}</td>
+                      <td><span class="badge {{ e.badgeClass }}">{{ e.tipo }}</span></td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.ref }}</td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.prov }}</td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.desc }}</td>
+                    </tr>
+                    <sc-if value="{{ e.detail }}" hint-placeholder-val="{{ false }}">
+                      <tr>
+                        <td colspan="6" style="background:#e9e9ec; padding:18px 24px;">
+                          <div style="display:grid; grid-template-columns:120px 1fr 1fr; gap:14px 20px; font-size:13px;">
+                            <div style="font-weight:700;">Regra:</div><div>{{ e.detail.regra }}</div>
+                            <div><span style="font-weight:700; margin-right:12px;">Característica:</span>{{ e.detail.caract }}</div>
+                            <div style="font-weight:700;">Base:</div><div>Acumulador &nbsp;&nbsp; {{ e.detail.base }}</div>
+                            <div>Valor do evento &nbsp;&nbsp;&nbsp; {{ e.detail.valor }}</div>
+                            <div style="font-weight:700;">Fórmula:</div><div style="grid-column:span 2;">{{ e.detail.formula }}</div>
+                            <div></div><div>{{ e.detail.conta }}</div><div>No resultado do cálculo é aplicado o arredondamento</div>
+                            <div style="font-weight:700;">Total:</div><div>{{ e.detail.total }}</div><div></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </sc-if>
+                  </sc-for>
+                </tbody>
+              </table>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">20 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">7 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top:16px;">
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+                <div class="stat regular">
+                  <div class="stat-iconbox" style="background:#b9b9c2; color:#fff;"><i class="fa-regular fa-clock"></i></div>
+                  <div class="stat-txt"><div class="stat-title">Total de horas apuradas</div><div class="stat-value">220:00</div></div>
+                </div>
+                <div class="stat regular">
+                  <div class="stat-iconbox" style="background:var(--sds-criticality-green); color:#fff;"><i class="fa-solid fa-circle-plus"></i></div>
+                  <div class="stat-txt"><div class="stat-title">Proventos (+)</div><div class="stat-value">2.000,15</div></div>
+                </div>
+                <div class="stat regular">
+                  <div class="stat-iconbox" style="background:var(--sds-criticality-red); color:#fff;"><i class="fa-solid fa-circle-minus"></i></div>
+                  <div class="stat-txt"><div class="stat-title">Descontos (-)</div><div class="stat-value">157,15</div></div>
+                </div>
+                <div class="stat regular">
+                  <div class="stat-iconbox" style="background:var(--sds-primary); color:#fff;"><i class="fa-solid fa-dollar-sign"></i></div>
+                  <div class="stat-txt"><div class="stat-title">Total líquido (a receber)</div><div class="stat-value">1.843,00</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.v1 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Lançamentos variáveis</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de lançamentos variáveis</span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.v2 }}">Adicionar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Editar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+              </div>
+              <div style="overflow-x:auto;">
+                <table class="sds-table">
+                  <thead>
+                    <tr>
+                      <th style="width:46px;"><div class="cb"></div></th>
+                      <sc-for list="{{ lvCols }}" as="c" hint-placeholder-count="9">
+                        <th class="sortable">{{ c }} <i class="fa-solid fa-sort sortarrow"></i></th>
+                      </sc-for>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ lvRows }}" as="r" hint-placeholder-count="1">
+                      <tr>
+                        <td><div class="cb"><i class="fa-solid fa-check"></i></div></td>
+                        <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="9">
+                          <td>{{ cell }}</td>
+                        </sc-for>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">10 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">1 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.v2 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Lançamentos variáveis</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Lançamentos variáveis</a></div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lançamentos variáveis</span></div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:18px 24px;">
+                <sc-for list="{{ formVariavel }}" as="f" hint-placeholder-count="5">
+                  <div class="field" style="grid-column:{{ f.span }};">
+                    <div class="label">{{ f.labelText }}<sc-if value="{{ f.required }}" hint-placeholder-val="{{ false }}"><span class="req"> *</span></sc-if></div>
+                    <div class="input-shell">
+                      <input readOnly="{{ true }}" value="{{ f.value }}">
+                      <sc-if value="{{ f.search }}" hint-placeholder-val="{{ false }}">
+                        <span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span>
+                      </sc-if>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-size:12px; color:var(--sds-fg-subtle); margin:22px 0 18px; border-top:1px solid var(--sds-border-subtle); padding-top:16px;">Criado por usuario@empresa.com.br em 29/07/2026 às 07:55. Atualizado por usuario@empresa.com.br em 29/07/2026 às 07:55.</div>
+              <div style="display:flex; gap:10px; align-items:center;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.v1 }}">Salvar</button>
+                <button class="btn btn-secondary">Excluir</button>
+                <button class="btn btn-tertiary" data-hs="1" onClick="{{ nav.v1 }}">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.imp }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Importação de lançamentos variáveis</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header"><span class="title">Importação de lançamentos variáveis</span></div>
+              <div style="display:flex; flex-direction:column; align-items:flex-start; gap:14px; padding-top:6px;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.i2 }}">Selecionar arquivo</button>
+                <sc-if value="{{ s.impFile }}" hint-placeholder-val="{{ false }}">
+                  <div style="width:100%; border:1px solid var(--sds-border-subtle); border-radius:3px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between;">
+                    <a href="#" style="font-size:13px;">entry-importation-variable.csv</a>
+                    <div style="display:flex; align-items:center; gap:10px; font-size:13px;">
+                      <i class="fa-solid fa-check" style="color:var(--sds-criticality-green);"></i>
+                      <a href="#">Remover arquivo</a>
+                    </div>
+                  </div>
+                </sc-if>
+                <button class="btn btn-primary" data-hs="{{ importar.hs }}" onClick="{{ importar.onClick }}" disabled="{{ importar.disabled }}">Importar</button>
+                <a href="#" style="font-size:13px;">Modelo de lançamento</a>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">Instruções para o preenchimento dos arquivos, clique <a href="#">aqui.</a></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Últimos lançamentos importados</span></div>
+              <sc-if value="{{ s.impDone }}" hint-placeholder-val="{{ false }}">
+                <div style="overflow-x:auto;">
+                  <table class="sds-table">
+                    <thead>
+                      <tr>
+                        <sc-for list="{{ impCols }}" as="c" hint-placeholder-count="5">
+                          <th class="sortable">{{ c }} <i class="fa-solid fa-sort sortarrow"></i></th>
+                        </sc-for>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <sc-for list="{{ impRows }}" as="r" hint-placeholder-count="1">
+                        <tr>
+                          <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="5">
+                            <td>{{ cell }}</td>
+                          </sc-for>
+                        </tr>
+                      </sc-for>
+                    </tbody>
+                  </table>
+                </div>
+              </sc-if>
+              <sc-if value="{{ s.impEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:10px; padding:48px 0 40px;">
+                  <i class="fa-solid fa-inbox" style="font-size:56px; color:var(--sds-border-subtle);"></i>
+                  <div style="font-size:14px; font-weight:700; margin-top:8px;">Nenhum resultado encontrado</div>
+                  <div style="font-size:13px; color:var(--sds-fg-muted);">Não há registros cadastrados até o momento.</div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.feList }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:6px;"><h1>Programações de férias</h1></div>
+            <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Lista de programações de férias</span></div>
+              <div style="display:flex; gap:10px; padding:18px 0;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fe2 }}">Adicionar <i class="fa-solid fa-caret-down"></i></button>
+                <button class="btn btn-secondary" disabled="{{ feBtnDisabled }}">Editar</button>
+                <button class="btn btn-secondary" disabled="{{ feBtnDisabled }}">Excluir</button>
+                <button class="btn btn-secondary">Outras ações <i class="fa-solid fa-caret-down"></i></button>
+              </div>
+              <dc-import name="TabelaFerias" rows="{{ feRows }}" highlight="{{ feHl }}" menu="{{ feMenu }}" hint-size="100%,520px"></dc-import>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 12px; color:var(--sds-fg-muted);">2</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">10 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">{{ feCount }} registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.fe2 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Programações de férias</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Programações de férias</a></div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Programação de férias individuais</span></div>
+              <div style="display:grid; grid-template-columns:2fr 1.3fr 1fr; gap:20px; margin-bottom:22px;">
+                <div class="field">
+                  <div class="label">Colaborador</div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="1 - Empresa 01 - 101 - Colaborador 02"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Período aquisitivo</div>
+                  <div class="input-shell"><input readOnly="{{ true }}" value="19/11/2024 - 18/11/2025"><span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Dias de saldo</div>
+                  <div style="display:flex; gap:8px;">
+                    <div style="width:35px; height:35px; border-radius:var(--sds-radius-small); background:var(--sds-criticality-green); color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <div class="input-shell disabled" style="flex:1;"><input readOnly="{{ true }}" value="30,00" style="text-align:right;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-header" style="background:var(--sds-grayscale-5); padding:10px 14px; margin:0 0 14px;"><span class="title" style="font-size:14px; font-weight:700;">Programações de férias</span></div>
+              <div style="padding-bottom:14px;"><button class="btn btn-primary">Adicionar</button></div>
+              <div style="overflow-x:auto;">
+                <table class="sds-table" style="min-width:1300px;">
+                  <thead>
+                    <tr>
+                      <sc-for list="{{ fe2Cols }}" as="c" hint-placeholder-count="10">
+                        <th style="white-space:normal; min-width:110px;">{{ c.label }} <i class="fa-{{ c.iconStyle }} fa-{{ c.icon }}" style="color:var(--sds-fg-muted); font-size:11px;"></i></th>
+                      </sc-for>
+                      <th style="min-width:110px;">Status</th>
+                      <th style="width:120px;">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>01/09/2026</td><td>Não informado</td><td>30,00</td><td>0,00</td><td>Não</td>
+                      <td>28/08/2026</td><td></td><td>Não</td>
+                      <td><span class="badge blue">Programada</span></td>
+                      <td><button class="btn btn-default btn-small" style="min-width:96px; justify-content:space-between;">Ações <i class="fa-solid fa-caret-down"></i></button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style="display:flex; gap:10px; align-items:center; margin-top:24px; border-top:1px solid var(--sds-border-subtle); padding-top:18px;">
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fe3 }}">Salvar</button>
+                <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
+                <button class="btn btn-tertiary" data-hs="1" onClick="{{ nav.fe1 }}">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.recibo }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Recibo de férias</h1></div>
+            <div style="font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Recibo de férias</a></div>
+
+            <div class="panel" style="display:flex; align-items:flex-start; gap:28px; margin-bottom:16px;">
+              <div style="width:74px; height:74px; border-radius:50%; background:var(--sds-border-subtle); display:flex; align-items:center; justify-content:center; color:#a8a8b4; font-size:34px; flex-shrink:0;"><i class="fa-solid fa-user"></i></div>
+              <div style="min-width:200px;">
+                <div style="font-size:15px; font-weight:700;">101 - Colaborador 02</div>
+                <div style="font-size:13px; color:var(--sds-fg-muted); margin-top:4px;">Auxiliar Adm</div>
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3,minmax(170px,1fr)); gap:16px 24px; flex:1;">
+                <sc-for list="{{ reciboHeader }}" as="h" hint-placeholder-count="9">
+                  <div class="lv lv-vertical"><span class="k">{{ h.label }}</span><span class="v">{{ h.value }}</span></div>
+                </sc-for>
+              </div>
+              <i class="fa-solid fa-plus" style="color:var(--sds-fg-muted);"></i>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header"><span class="title">Detalhes do recibo de férias</span></div>
+              <div class="tabs" style="padding:0; margin-bottom:8px;"><div class="tab active">Eventos</div><div class="tab">Apuração de horas</div><div class="tab">Médias</div></div>
+
+              <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                <thead>
+                  <tr style="border-bottom:1px solid var(--sds-border-subtle);">
+                    <th style="width:60px;"></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700;">Evento <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:200px;">Tipo</th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Referência <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Proventos <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:right; padding:12px 8px; font-weight:700; width:180px;">Descontos <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ reciboRows }}" as="e" hint-placeholder-count="4">
+                    <tr style="border-bottom:1px solid var(--sds-bg-hover); background:{{ e.bg }};">
+                      <td style="padding:12px 8px; text-align:center; color:var(--sds-fg-muted);"><span data-hs="{{ e.hs }}" onClick="{{ e.onToggle }}" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:24px; border-radius:3px; cursor:{{ e.toggleCursor }};" style-hover="background:var(--sds-border-subtle);">{{ e.toggle }}</span></td>
+                      <td style="padding:12px 8px; padding-left:24px;">{{ e.name }}</td>
+                      <td><span class="badge {{ e.badgeClass }}">{{ e.tipo }}</span></td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.ref }}</td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.prov }}</td>
+                      <td style="padding:12px 8px; text-align:right;">{{ e.desc }}</td>
+                    </tr>
+                    <sc-if value="{{ e.detail }}" hint-placeholder-val="{{ false }}">
+                      <tr>
+                        <td colspan="6" style="background:#e9e9ec; padding:18px 24px;">
+                          <div style="display:grid; grid-template-columns:120px 1fr 1fr; gap:14px 20px; font-size:13px;">
+                            <div style="font-weight:700;">Regra:</div><div>INSS</div>
+                            <div><span style="font-weight:700; margin-right:12px;">Característica:</span>INSS sobre recibo de férias</div>
+                            <div style="font-weight:700;">Base:</div><div><span style="margin-right:26px;">+</span>Acumulador &nbsp;&nbsp;&nbsp; 23 - Base INSS de cálculo</div>
+                            <div style="display:flex; justify-content:space-between;"><span>Valor do evento</span><span>6.400,0000000000</span></div>
+                            <div style="font-weight:700;">Fórmula:</div><div style="grid-column:span 2;">Cálculo Progressivo</div>
+                            <sc-for list="{{ e.detail.lines }}" as="ln" hint-placeholder-count="4">
+                              <div></div><div>{{ ln.txt }}</div><div>{{ ln.note }}</div>
+                            </sc-for>
+                            <div style="font-weight:700;">Total:</div><div>697,50</div><div></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </sc-if>
+                  </sc-for>
+                </tbody>
+              </table>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">20 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">4 registro(s) encontrado(s)</div>
+              </div>
+
+              <div class="grid grid-3" style="margin-top:22px; border-top:1px solid var(--sds-border-subtle); padding-top:22px;">
+                <div class="stat regular">
+                  <div class="stat-iconbox" style="background:var(--sds-criticality-green); color:#fff;"><i class="fa-solid fa-circle-plus"></i></div>
+                  <div class="stat-txt"><div class="stat-title">Proventos (+)</div><div class="stat-value">6.400,00</div></div>
+                </div>
+                <div class="stat regular">
+                  <div class="stat-iconbox" style="background:var(--sds-criticality-red); color:#fff;"><i class="fa-solid fa-circle-minus"></i></div>
+                  <div class="stat-txt"><div class="stat-title">Descontos (-)</div><div class="stat-value">1.255,30</div></div>
+                </div>
+                <div class="stat regular">
+                  <div class="stat-iconbox" style="background:var(--sds-primary); color:#fff;"><i class="fa-solid fa-dollar-sign"></i></div>
+                  <div class="stat-txt"><div class="stat-title">Total líquido (a receber)</div><div class="stat-value">5.144,70</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </div>
+
+  <div style="height:52px; background:#1c1f24; border-top:1px solid #33373f; display:flex; align-items:center; gap:16px; padding:0 20px; flex-shrink:0;">
+    <div data-hs="1" onClick="{{ nav.home }}" style="color:#fff; font-size:12px; padding:7px 14px; border:1px solid #4a4f59; border-radius:4px; cursor:pointer;" style-hover="background:#2b2f36;"><i class="fa-solid fa-grip" style="margin-right:8px;"></i>Jornadas</div>
+    <div data-hs="1" onClick="{{ toggleMenu }}" style="color:#fff; font-size:12px; padding:7px 14px; border:1px solid #4a4f59; border-radius:4px; cursor:pointer;" style-hover="background:#2b2f36;"><i class="fa-solid fa-bars" style="margin-right:8px;"></i>Menu</div>
+    <div style="flex:1;"></div>
+    <div data-hs="1" onClick="{{ nav.prev }}" style="color:#fff; font-size:12px; padding:7px 16px; border:1px solid #4a4f59; border-radius:4px; cursor:pointer;" style-hover="background:#2b2f36;">Anterior</div>
+    <div data-hs="1" onClick="{{ nav.next }}" style="background:var(--sds-primary); color:#fff; font-size:12px; padding:8px 20px; border-radius:4px; cursor:pointer;" style-hover="background:var(--sds-primary-hover);">Próximo</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+const L = (label, screen) => ({ label, screen });
+const B = (label, children) => ({ label, children });
+
+const MENU = [
+  B('Cadastros gerais', [
+    B('Pessoas', []), B('Cadastros', []), B('Empresas', []), B('Posições', []),
+    B('Colaboradores', [
+      L('Ficha cadastral', 'todo'), L('Desligamentos', 'todo'),
+      B('Históricos', [
+        L('Afastamentos','todo'), L('Anotações','todo'), L('Cargos','todo'), L('Centros de custo','todo'),
+        L('Contas bancárias','todo'), L('Crachás','todo'), L('Escalas','todo'), L('Filiais','todo'),
+        L('Estabilidades','todo'), L('Informações de aprendiz','todo'), L('Informações de estágio','todo'),
+        L('Informações financeiras','todo'), L('Informações de terceiros','todo'), L('Locais','todo'),
+        L('Localização vinculada da em…','todo'), L('Posições','todo'), L('Treinamentos Norma Regulame…','todo'),
+        L('Salariais','h1'), L('Sindicatos','todo'), L('Vínculos','todo')
+      ]),
+      B('Dependentes', []), B('Relatórios', [])
+    ]),
+    B('Diversos', []), B('Cálculos', []), B('Obrigações Legais', [])
+  ]),
+  L('Soluções para Gestão de Pes…', 'todo'),
+  B('Folha X', [
+    B('Lançamentos', [
+      B('Plano de saúde', []), L('Créditos consignados','todo'), L('Lançamentos fixos','todo'),
+      L('Lançamentos variáveis','v1'), L('Lançamentos de eventos','todo'), L('Outros contratos','todo'),
+      L('Importação de lançamentos f…','todo'), L('Importação de lançamentos v…','i1'),
+      L('Receitas de desoneração da …','todo'), B('Relatórios', []), B('Terceiro', [])
+    ]),
+    B('Históricos', [ L('Salariais','h1') ]),
+    B('Cadastros', []),
+    B('Rescisão', [ L('Programações','r3'), B('Relatórios', []) ]),
+    B('Ficha financeira', [
+      L('Demonstrativo de pagamento','d1'), L('Informação mensal do totali…','todo'),
+      L('RRA – Rendimentos recebidos…','todo'), L('Valores anuais de 13º salár…','todo'), B('Relatórios', [])
+    ]),
+    B('Contábil', [
+      L('Código de lançamento contáb…','todo'), L('Assinalamento de centros de…','todo'),
+      L('Processamento contábil','c1')
+    ]),
+    B('Cálculos', [ L('Excluir cálculo','todo'), L('Calcular folha','f1') ]),
+    B('Férias', [
+      B('Cálculos', [ L('Calcular férias','fe3'), L('Excluir cálculo','todo') ]), L('Período aquisitivo','todo'), L('Programações','fe1'),
+      L('Exclusão de recibos de féri…','todo'), B('Relatórios', [])
+    ]),
+    B('eSocial', [
+      L('Definições do eSocial','e1'), L('Definições do eDocs','ed1'),
+      L('Geração de leiautes do eSoc…','g1'), L('Envio de leiautes','en1'),
+      L('Fechamento/Reabertura de pe…','fc1')
+    ]),
+    B('Integrações', [ L('Wiipo','w1') ])
+  ]),
+  B('Gestão do Ponto X', [])
+];
+
+const JOURNEYS = [
+  ['01','Programar e calcular rescisão','Rescisão › Programações › cálculo › demonstrativo', ['r3','r4','r5','r6','r7','r8','r9'], [2,3]],
+  ['02','Lançar eventos variáveis','Lançamentos › Lançamentos variáveis › novo lançamento', ['v1','v2'], [2,0]],
+  ['03','Importar planilha de variáveis','Lançamentos › Importação de variáveis › importar', ['i1','i2','i3'], [2,0]],
+  ['04','Calcular uma folha','Cálculos › Calcular folha › processar', ['f1','f2'], [2,6]],
+  ['05','Conferir demonstrativo / holerite','Ficha financeira › Demonstrativo de pagamento › ficha financeira', ['d1','d2','d3'], [2,4]],
+  ['06','Programar e calcular férias','Férias › Programações › nova programação › cálculo › recibo', ['fe1','fe2','fe3','fe4','fe5','fe6'], [2,7]],
+  ['07','Alteração / reajuste salarial','Cadastros gerais › Colaboradores › Históricos › Salariais', ['h1','h2'], [0,4,2]],
+  ['08','Definições do eSocial','eSocial › Definições do eSocial › abas › categorias opcionais', ['e1','e2','e3','e4','e5','e6'], [2,8]],
+  ['09','Definições do eDocs','eSocial › Definições do eDocs › empresa', ['ed1','ed2','ed3','ed4'], [2,8]],
+  ['10','Geração de leiautes','eSocial › Geração de leiautes › processar marcados', ['g1','g2'], [2,8]],
+  ['11','Envio e monitoramento','eSocial › Envio de leiautes › acompanhamento', ['en1','en2'], [2,8]],
+  ['12','Fechamento de periódicos','eSocial › Fechamento/Reabertura › fechar período', ['fc1','fc2','fc3'], [2,8]],
+  ['13','Contabilização','Contábil › Processamento contábil › processar', ['c1','c2'], [2,5]],
+  ['14','Integração Wiipo','Integrações › Wiipo › ativação › empresas › colaboradores › holerites › configurações', ['w1','w2','w3','w4','w5'], [2,9]]
+];
+
+const SCREEN_TITLES = {
+  todo:'Menu', v1:'Lançamentos variáveis', v2:'Lançamentos variáveis',
+  i1:'Importação de lançamentos variáveis', i2:'Importação de lançamentos variáveis', i3:'Importação de lançamentos variáveis',
+  f1:'Calcular folha', f2:'Calcular folha', d1:'Demonstrativo de pagamento', fe1:'Programações de férias',
+  d2:'Demonstrativo de pagamento', d3:'Demonstrativo de pagamento',
+  h1:'Histórico salarial', h2:'Histórico salarial', e1:'Definições do eSocial', ed1:'Definições do eDocs',
+  e2:'Definições do eSocial', e3:'Definições do eSocial', e4:'Definições do eSocial',
+  e5:'Definições do eSocial', e6:'Categorias opcionais',
+  ed2:'Definições do eDocs', ed3:'Definições do eDocs', ed4:'Definições do eDocs',
+  g2:'Geração de leiautes do eSocial', en2:'Envio de leiautes',
+  fc2:'Fechamento/Reabertura de periódicos', fc3:'Fechamento/Reabertura de periódicos',
+  g1:'Geração de leiautes do eSocial', en1:'Envio de leiautes',
+  fc1:'Fechamento/Reabertura de periódicos', c1:'Processamento contábil', c2:'Processamento contábil', w1:'Integração Wiipo',
+  w2:'Integração Wiipo', w3:'Integração Wiipo', w4:'Integração Wiipo', w5:'Integração Wiipo'
+};
+
+const BUILT = ['r3','r4','r5','r6','r7','r8','r9','v1','v2','i1','i2','i3','f1','f2','fe1','fe2','fe3','fe4','fe5','fe6','d1','d2','d3','h1','h2','e1','e2','e3','e4','e5','e6','ed1','ed2','ed3','ed4','g1','g2','en1','en2','fc1','fc2','fc3','c1','c2','w1','w2','w3','w4','w5'];
+
+const LV_COLS = ['Empresa','Nome empresa','Colaborador','Nome do colaborador','Evento','Nome do evento','Código de cálculo','Competência','Referência'];
+const LV_ROWS = [['1','Empresa 01','1.234','Colaborador 01','333','Hora extras 100%','21.129 - Folha mensal','03/2026','25,00']];
+const FORM_LV = [
+  ['Colaborador *','1 - Empresa 01 - 1234 - Colaborador 01','search','auto'],
+  ['Código de cálculo *','21129 - Folha mensal - 03/2026','search','auto'],
+  ['Evento *','333 - Hora extras 100%','search','auto'],
+  ['Referência *','25,00','','auto'],
+  ['Valor *','R$0,00','','span 1']
+];
+const IMP_COLS = ['Empresa','Colaborador','Nome do colaborador','Evento','Competência','Referência'];
+const IMP_ROWS = [['1','1.234','Colaborador 01','333 - Hora extras 100%','03/2026','25,00']];
+
+const RESC_ROWS = [
+  ['1','Empresa 01','1234','Colaborador 01','03/08/2026','Fim de contrato antecip…','Não informado','Calculada'],
+  ['1','Empresa 01','1234','Colaborador 01','03/08/2026','Fim de contrato antecip…','Não informado','Programada'],
+  ['3','Empresa 03','101','Colaborador 05','05/01/2026','Sem justa causa','05/01/2026','Calculada'],
+  ['1','Empresa 01','5000','Colaborador 06','10/03/2026','Sem justa causa','10/03/2026','Calculada'],
+  ['1','Empresa 01','102','Colaborador 03','02/01/2026','Sem justa causa','02/01/2026','Calculada'],
+  ['2','Empresa 02','22','Colaborador 08','12/01/2026','Sem justa causa','12/01/2026','Calculada'],
+  ['2','Empresa 02','21','Colaborador 07','02/02/2026','Sem justa causa','02/02/2026','Programada'],
+  ['1','Empresa 01','102','Colaborador 03','02/01/2026','Sem justa causa','02/01/2026','Programada'],
+  ['3','Empresa 03','107','Colaborador 04','03/04/2026','Sem justa causa','03/04/2026','Calculada'],
+  ['1','Empresa 01','102','Colaborador 03','02/01/2026','Sem justa causa','02/01/2026','Programada'],
+  ['1','Empresa 01','60','Colaborador 15','13/04/2026','Sem justa causa','13/04/2026','Calculada']
+];
+
+const FORM = [
+  ['Colaborador *','1 - Empresa 01 - 1234 -','search'],
+  ['Data de demissão *','03/08/2026','cal'],
+  ['Causa de rescisão *','2 - Fim de contrato antecipado empresa','search'],
+  ['Data do aviso','','cal'],
+  ['Data de pagamento *','13/08/2026','cal'],
+  ['Indicativo de remuneração após o desligamento','Não se aplica','caret'],
+  ['Data de remuneração após o desligamento','','cal'],
+  ['Data final do contrato','29/08/2026','cal'],
+  ['Final antecipado','26','num'],
+  ['Dias trabalhados *','3','num'],
+  ['Aviso indenizado','0,00','num'],
+  ['Acréscimo de aviso indenizado','0,00','num'],
+  ['Aviso reavido','0','num'],
+  ['Acréscimo de aviso reavido','0','num'],
+  ['Estabilidade *','0','num'],
+  ['Dias de multa sobre qualificação profissional','0','num'],
+  ['Salário final do aviso','0,00','num'],
+  ['Data do histórico salarial','','cal'],
+  ['Pensão de FGTS','Não se aplica','caret'],
+  ['Valor de pensão de FGTS','0,00','numMuted'],
+  ['Percentual de pensão de FGTS','0,00','numMuted'],
+  ['Saldo do FGTS','0,00','num'],
+  ['Processo trabalhista','','plain'],
+  ['Observação para o eSocial','','plain'],
+  ['Tipo de pagamento em caso de falecimento','Selecione o tipo de pagamento em caso de f','caretMuted']
+];
+
+const DEMO_EVENTS = [
+  {group:'Saldo de salário'},
+  {name:'200 - Saldo de salário', tipo:'Provento', ref:'14,67', prov:'133,33', desc:''},
+  {name:'201 - DSR saldo de salário', tipo:'Provento', ref:'7,33', prov:'66,67', desc:''},
+  {group:'13º salário proporcional'},
+  {name:'203 - 13º salário proporcional', tipo:'Provento', ref:'2,00', prov:'333,33', desc:''},
+  {group:'FGTS da rescisão'},
+  {name:'128 - FGTS Rescisão', tipo:'Informativa', ref:'8,00', prov:'16,00', desc:'', key:'fgts',
+   detail:{regra:'FGTS', caract:'FGTS depositado na rescisão', base:'28 - Base FGTS do cálculo', valor:'200,0000000000',
+     formula:'Valor dos eventos da base * % FGTS mensal (de acordo com a categoria do eSocial)',
+     conta:'200,0000000000 * 8,0000000000%', total:'16,00'}},
+  {name:'133 - FGTS Rescisão Depositado', tipo:'Informativa', ref:'8,00', prov:'16,00', desc:''},
+  {group:'Impostos'},
+  {name:'276 - Pensão Judicial', tipo:'Desconto', ref:'0,00', prov:'', desc:'200,00'},
+  {name:'500 - INSS mensal', tipo:'Desconto', ref:'7,50', prov:'', desc:'15,00', key:'inss',
+   detail:{regra:'INSS', caract:'INSS', base:'23 - Base INSS de cálculo', valor:'200,0000000000',
+     formula:'Cálculo Progressivo',
+     conta:'Faixa salarial 1,0000000000: 1.621,0000000000 * 7,5000000000% = 15,0000000000', total:'15,00'}},
+  {name:'501 - INSS sobre 13º salário', tipo:'Desconto', ref:'7,50', prov:'', desc:'24,99'}
+];
+
+const FE_A = [
+  ['3','Empresa 03','500','Colaborador 04','Não informado','Não informado','09/03/2026','Não informado','20,00','0,00','Programada'],
+  ['1','Empresa 01','1.234','Colaborador 01','01/06/2026','31/05/2027','15/06/2026','04/07/2026','20,00','0,00','Calculada'],
+  ['2','Empresa 02','21','Colaborador 07','01/07/2023','30/06/2024','02/02/2026','03/03/2026','30,00','0,00','Calculada'],
+  ['3','Empresa 03','107','Colaborador 04','Não informado','Não informado','09/03/2026','Não informado','20,00','0,00','Programada'],
+  ['3','Empresa 03','107','Colaborador 04','01/03/2025','28/02/2026','22/12/2025','31/12/2025','10,00','0,00','Calculada'],
+  ['1','Empresa 01','140','Colaborador 09','01/04/2025','31/03/2026','09/06/2025','23/06/2025','15,00','0,00','Calculada'],
+  ['1','Empresa 01','101','Colaborador 02','19/11/2022','18/11/2023','16/06/2025','05/07/2025','20,00','10,00','Calculada'],
+  ['4','Empresa 04','52','Colaborador 10','01/01/2025','31/12/2025','19/01/2026','07/02/2026','20,00','10,00','Calculada'],
+  ['3','Empresa 03','109','Colaborador 11','01/03/2024','28/02/2025','17/08/2026','15/09/2026','30,00','0,00','Calculada'],
+  ['3','Empresa 03','8.899','Colaborador 12','Não informado','Não informado','09/03/2026','Não informado','20,00','0,00','Programada']
+];
+
+const FE_B = [
+  ['1','Empresa 01','140','Colaborador 09','01/04/2025','31/03/2026','09/06/2025','23/06/2025','15,00','0,00','Calculada'],
+  ['1','Empresa 01','140','Colaborador 09','01/04/2025','31/03/2026','30/06/2025','04/07/2025','5,00','0,00','Calculada'],
+  ['1','Empresa 01','103','Colaborador 13','17/03/2021','16/03/2022','05/05/2025','03/06/2025','30,00','0,00','Calculada'],
+  ['1','Empresa 01','101','Colaborador 02','19/11/2022','18/11/2023','16/06/2025','05/07/2025','20,00','10,00','Calculada'],
+  ['1','Empresa 01','101','Colaborador 02','19/11/2023','18/11/2024','20/01/2026','18/02/2026','30,00','0,00','Calculada'],
+  ['1','Empresa 01','150','Colaborador 14','01/12/2025','30/11/2026','13/07/2026','27/07/2026','15,00','0,00','Calculada'],
+  ['1','Empresa 01','1.234','Colaborador 01','01/06/2026','31/05/2027','15/06/2026','04/07/2026','20,00','0,00','Calculada'],
+  ['1','Empresa 01','101','Colaborador 02','19/11/2024','18/11/2025','01/09/2026','Não informado','30,00','0,00','Programada'],
+  ['2','Empresa 02','21','Colaborador 07','01/07/2023','30/06/2024','02/02/2026','03/03/2026','30,00','0,00','Calculada'],
+  ['3','Empresa 03','8.899','Colaborador 12','Não informado','Não informado','09/03/2026','Não informado','20,00','0,00','Programada']
+];
+
+const FE_C = [
+  ['3','Empresa 03','500','Colaborador 04','Não informado','Não informado','09/03/2026','Não informado','20,00','0,00','Programada'],
+  ['1','Empresa 01','1.234','Colaborador 01','01/06/2026','31/05/2027','15/06/2026','04/07/2026','20,00','0,00','Calculada'],
+  ['2','Empresa 02','21','Colaborador 07','01/07/2023','30/06/2024','02/02/2026','03/03/2026','30,00','0,00','Calculada'],
+  ['3','Empresa 03','107','Colaborador 04','Não informado','Não informado','09/03/2026','Não informado','20,00','0,00','Programada'],
+  ['3','Empresa 03','107','Colaborador 04','01/03/2025','28/02/2026','22/12/2025','31/12/2025','10,00','0,00','Calculada'],
+  ['1','Empresa 01','101','Colaborador 02','19/11/2024','18/11/2025','01/09/2026','30/09/2026','30,00','0,00','Calculada'],
+  ['1','Empresa 01','140','Colaborador 09','01/04/2025','31/03/2026','09/06/2025','23/06/2025','15,00','0,00','Calculada'],
+  ['1','Empresa 01','101','Colaborador 02','19/11/2022','18/11/2023','16/06/2025','05/07/2025','20,00','10,00','Calculada'],
+  ['4','Empresa 04','52','Colaborador 10','01/01/2025','31/12/2025','19/01/2026','07/02/2026','20,00','10,00','Calculada'],
+  ['3','Empresa 03','109','Colaborador 11','01/03/2024','28/02/2025','17/08/2026','15/09/2026','30,00','0,00','Calculada']
+];
+
+const FE2_COLS = [
+  ['Início das férias','pen-to-square'], ['Fim das férias','circle-info'], ['Dias de férias','pen-to-square'],
+  ['Dias de abono','pen-to-square'], ['Adiantar décimo terceiro salário','pen-to-square'],
+  ['Data de pagamento','pen-to-square'], ['Data de retorno','circle-info'], ['Pagar multa de férias em dobro','pen-to-square']
+];
+
+const RECIBO_EVENTS = [
+  {name:'100 - Horas de férias diurnas', tipo:'Provento', ref:'220,00', prov:'4.800,00', desc:''},
+  {name:'101 - 1/3 de férias', tipo:'Provento', ref:'0,00', prov:'1.600,00', desc:''},
+  {name:'502 - INSS sobre férias', tipo:'Desconto', ref:'14,00', prov:'', desc:'697,50', key:'inss'},
+  {name:'503 - IRRF sobre férias', tipo:'Desconto', ref:'27,50', prov:'', desc:'557,80'}
+];
+
+const INSS_LINES = [
+  ['Faixa salarial 1,0000000000: 1.621,0000000000 * 7,5000000000% = 121,5700000000',''],
+  ['Faixa salarial 2,0000000000: (2.902,8400000000 - 1.621,0100000000) * 9,0000000000% = 115,3600000000',''],
+  ['Faixa salarial 3,0000000000: (4.354,2700000000 - 2.902,8500000000) * 12,0000000000% = 174,1700000000',''],
+  ['Faixa salarial 4,0000000000: (6.400,0000000000 - 4.354,2800000000) * 14,0000000000% = 286,4000000000','No resultado do cálculo é aplicado o arredondamento']
+];
+
+const DP_ROWS = [
+  ['12345 - Colaborador 01','1 - Auxiliar administrativo'],
+  ['11555 - Colaborador 02','1 - Auxiliar administrativo'],
+  ['5100 - Colaborador 03','2 - Professor de Inglês'],
+  ['5009 - Colaborador 04','1 - Auxiliar administrativo'],
+  ['5008 - Colaborador 05','1 - Auxiliar administrativo'],
+  ['5007 - Colaborador 06','1 - Auxiliar administrativo']
+];
+
+const DP_EVENTS = [
+  {name:'1 - Horas normais', tipo:'Provento', ref:'115,33', prov:'1.048,48', desc:''},
+  {name:'2 - Horas DSR', tipo:'Provento', ref:'22,00', prov:'200,00', desc:''},
+  {name:'5 - Auxílio maternidade', tipo:'Provento', ref:'82,67', prov:'751,52', desc:''},
+  {name:'507 - Troco do mês', tipo:'Provento', ref:'0,00', prov:'0,15', desc:''},
+  {name:'500 - INSS mensal', tipo:'Desconto', ref:'9,00', prov:'', desc:'155,68', key:'dpInss',
+   detail:{regra:'INSS', caract:'INSS', base:'23 - Base INSS de cálculo', valor:'2.000,1500000000',
+     formula:'Cálculo Progressivo',
+     conta:'Faixa salarial 1,0000000000: 1.621,0000000000 * 7,5000000000% = 121,5700000000', total:'155,68'}},
+  {name:'508 - Troco mês anterior', tipo:'Desconto', ref:'100,00', prov:'', desc:'1,47'},
+  {name:'600 - FGTS mensal', tipo:'Informativa', ref:'8,00', prov:'160,00', desc:''}
+];
+
+const HS_COLS = ['Código da empresa','Nome da empresa','Código da filial','Nome da filial','Código do colaborador','Nome do colaborador','Tipo de contrato','Data inicial','Sequência'];
+
+const HS_ROWS = [
+  ['1','Empresa 01','1','Filial padrão','1.000','Colaborador 08','Empregado','01/01/2026','1'],
+  ['3','Empresa 03','1','Filial 03','965','Colaborador 05','Empregado','20/07/2026','1'],
+  ['3','Empresa 03','1','Filial 03','653','Colaborador 05','Empregado','13/07/2026','1'],
+  ['1','Empresa 01','1','Filial padrão','140','Colaborador 09','Empregado','01/04/2025','1'],
+  ['3','Empresa 03','1','Filial 03','4.321','Colaborador 03','Empregado','01/06/2026','1'],
+  ['1','Empresa 01','1','Filial padrão','1.234','Colaborador 01','Empregado','01/06/2026','1'],
+  ['3','Empresa 03','1','Filial 03','159','Colaborador 06','Terceiro','01/01/2026','1'],
+  ['3','Empresa 03','1','Filial 03','5.009','Colaborador 04','Empregado','01/03/2026','1'],
+  ['1','Empresa 01','1','Filial padrão','5.100','Colaborador 03','Empregado','01/04/2026','1']
+];
+
+const ESOC_DEF_ROWS = [
+  ['1 - Empresa 01','Produção restrita','Grandes empresas'],
+  ['3 - Empresa 03','Produção restrita','Empresas não optantes pelo Simples Nacional'],
+  ['2 - Empresa 02','Produção restrita','Grandes empresas']
+];
+
+const ESOC_LAYOUTS = [
+  'S-1000 - Informações do Empregador/Contribuinte/Órgão Público',
+  'S-1005 - Tabela de Estabelecimentos, Obras ou Unidades de Órgãos Públicos',
+  'S-1010 - Tabela de Rúbricas',
+  'S-1020 - Tabela de Lotações Tributárias',
+  'S-1070 - Tabela de Processos Administrativos/Judiciais'
+];
+
+const ESOC_CATEGORIAS = [
+  '701 - Contribuinte individual - Autônomo em geral, exceto se enquadrado em uma das demais categorias de contribuinte individual',
+  '711 - Contribuinte individual - Transportador autônomo de passageiros',
+  '712 - Contribuinte individual - Transportador autônomo de carga',
+  '741 - Contribuinte individual - Microempreendedor individual',
+  '751 - Contribuinte individual - Magistrado classista temporário da Justiça do Trabalho ou da Justiça Eleitoral que seja aposentado de qualquer regime previdenciário',
+  '903 - Bolsista, nos termos da Lei 8.958/1994',
+  '904 - Participante de curso de formação, como etapa de concurso público, sem vínculo de emprego/estatutário'
+];
+
+const EDOCS_ROWS = [['Empresa 01','00.000.000/0001-00'],['Empresa 07','00.000.000/0001-09']];
+
+const GER_ROWS = [
+  ['S-1000','3 - Empresa 03','0','0','1','0'],
+  ['S-1005','1 - Empresa 01','0','0','1','2'],
+  ['S-1005','3 - Empresa 03','0','0','2','1'],
+  ['S-1010','1 - Empresa 01','32','0','1','0'],
+  ['S-1010','2 - Empresa 02','9','0','0','0'],
+  ['S-1010','3 - Empresa 03','0','226','0','0'],
+  ['S-1020','1 - Empresa 01','1','0','0','0'],
+  ['S-1020','3 - Empresa 03','1','0','0','0']
+];
+
+const ENV_ROWS = [
+  ['S-2200','09/06/2026 09:36:05','Mensal','01/06/2026','3 - Empresa 03','4321 - Colaborador 03','CPF: 088.***.***-31, Matrícula: 4321','Aguardando envio manual','yellow'],
+  ['S-2399','15/12/2025 10:31:35','Mensal','01/03/2023','2 - Empresa 02','22 - Colaborador 07','CPF: 103.***.***-80, Matrícula: 2-902-00031783','Aguardando envio manual','yellow'],
+  ['S-1000','12/02/2026 13:52:08','Mensal','01/03/2021','3 - Empresa 03','Não informado','Tipo de inscrição: 1, Número de inscrição: 52438701','Erro no mensageiro do evento','red'],
+  ['S-1010','30/01/2026 18:24:57','Mensal','01/01/2018','3 - Empresa 03','Não informado','Código da rúbrica: SEX-163','Mensagem retornada do governo','red'],
+  ['S-1010','30/01/2026 18:25:02','Mensal','01/01/2018','3 - Empresa 03','Não informado','Código da rúbrica: SEX-284','Mensagem retornada do governo','red'],
+  ['S-2200','03/02/2026 07:31:45','Mensal','03/02/2026','3 - Empresa 03','8899 - Colaborador 12','CPF: 578.***.***-66, Matrícula: 8899','Mensagem retornada do governo','red'],
+  ['S-1000','30/01/2026 17:59:36','Mensal','01/03/2021','3 - Empresa 03','Não informado','Tipo de inscrição: 1, Número de inscrição: 41422717','Recibo retornado com sucesso','green']
+];
+
+const FECH_ROWS = [
+  ['Empresa 01','1','01/11/2025','Folha mensal','Sim','Sim','Não'],
+  ['Empresa 04','4','01/02/2025','Folha mensal','Sim','Sim','Não'],
+  ['Empresa 03','3','01/04/2026','Folha mensal','Não','Sim','Não'],
+  ['Empresa 04','4','01/02/2026','Folha mensal','Sim','Sim','Não'],
+  ['Empresa 01','1','01/01/2026','13º salário','Sim','Não','Não'],
+  ['Empresa 01','1','01/12/2026','Folha mensal','Não','Sim','Não'],
+  ['Empresa 04','4','01/07/2025','Folha mensal','Sim','Sim','Não'],
+  ['Empresa 04','4','01/03/2025','Folha mensal','Sim','Sim','Não'],
+  ['Empresa 01','1','01/03/2025','Folha mensal','Não','Sim','Não'],
+  ['Empresa 03','3','01/03/2025','Folha mensal','Sim','Sim','Não']
+];
+
+const BADGE = { Provento:'green', Desconto:'red', Informativa:'blue' };
+
+class Component extends DCLogic {
+  state = { screen: 'home', path: [], menuOpen: true, journey: null, open: null };
+
+  nodeAt(path) {
+    let list = MENU, node = null;
+    for (const i of path) { node = list[i]; list = node.children || []; }
+    return { node, list };
+  }
+
+  go(id) { return () => this.setState({ screen: id, open: null }); }
+
+  // linhas expansíveis: o passo da jornada define o estado inicial, mas o usuário pode abrir/fechar livremente
+  defaultOpen(sc) {
+    const d = {};
+    if (sc === 'r8' || sc === 'r9') d.fgts = true;
+    if (sc === 'r9') d.inss = true;
+    if (sc === 'fe6') d.feInss = true;
+    return d;
+  }
+
+  openMap() { return this.state.open || this.defaultOpen(this.state.screen); }
+
+  toggleRow(key) {
+    return () => {
+      const cur = this.openMap();
+      this.setState({ open: Object.assign({}, cur, { [key]: !cur[key] }) });
+    };
+  }
+
+  componentDidMount() {
+    this._stray = e => { if (!e.target.closest('[data-hs]')) this.pulseHotspots(); };
+    document.addEventListener('click', this._stray, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this._stray, true);
+    clearTimeout(this._pulseT);
+  }
+
+  // dica de hotspot: pisca todos os pontos clicáveis da tela atual (padrão Figma)
+  pulseHotspots() {
+    clearTimeout(this._pulseT);
+    const spots = Array.from(document.querySelectorAll('[data-hs]')).filter(el => el.offsetParent !== null);
+    spots.forEach(el => {
+      if (el.dataset.hsPrev === undefined) el.dataset.hsPrev = el.style.cssText;
+      el.style.transition = 'box-shadow 140ms ease-out';
+      el.style.boxShadow = '0 0 0 3px #22DCE6, 0 0 0 9px rgba(34,220,230,0.28)';
+      el.style.borderRadius = el.style.borderRadius || '4px';
+      el.style.position = getComputedStyle(el).position === 'static' ? 'relative' : el.style.position;
+      el.style.zIndex = '40';
+    });
+    this._pulseT = setTimeout(() => {
+      spots.forEach(el => {
+        el.style.cssText = el.dataset.hsPrev || '';
+        delete el.dataset.hsPrev;
+      });
+    }, 1300);
+  }
+
+  renderVals() {
+    const { screen: sc, path, menuOpen, journey } = this.state;
+    const S = id => sc === id;
+    const { node, list } = this.nodeAt(path);
+
+    const menuItems = list.map((it, idx) => {
+      const branch = !!it.children;
+      return {
+        label: it.label,
+        isBranch: branch,
+        isLeaf: !branch,
+        bg: (!branch && it.screen === sc) ? 'var(--sds-navbar-bg-active)' : 'transparent',
+        onClick: branch
+          ? () => this.setState({ path: [...path, idx] })
+          : () => this.setState({ screen: it.screen, menuOpen: false, open: null })
+      };
+    });
+
+    const journeys = JOURNEYS.map(([num, name, desc, screens, jpath]) => ({
+      num, name, desc,
+      opacity: BUILT.includes(screens[0]) ? 1 : 0.62,
+      onClick: () => this.setState({ screen: screens[0], path: jpath, menuOpen: false, journey: num, open: null })
+    }));
+
+    const j = JOURNEYS.find(x => x[3].includes(sc));
+    const seq = j ? j[3] : [];
+    const i = seq.indexOf(sc);
+    const step = d => () => {
+      if (i < 0) return this.setState({ screen: 'home', menuOpen: false, open: null });
+      const t = i + d;
+      if (t < 0 || t >= seq.length) return this.setState({ screen: 'home', menuOpen: false, open: null });
+      this.setState({ screen: seq[t], open: null });
+    };
+
+    const crumb = sc === 'home'
+      ? 'Selecione uma jornada ou navegue pelo menu'
+      : (j ? `Jornada ${j[0]} · ${j[1]} — passo ${i + 1} de ${seq.length}` : 'Navegação livre');
+
+    const formRescisao = FORM.map(([label, value, kind]) => {
+      const required = label.endsWith(' *');
+      return {
+        labelText: required ? label.slice(0, -2) : label,
+        required, value,
+        affixSearch: kind === 'search',
+        affixDate: kind === 'cal',
+        affixCaret: kind === 'caret' || kind === 'caretMuted',
+        shellClass: kind === 'numMuted' || kind === 'caretMuted' ? 'disabled' : '',
+        textAlign: kind === 'num' || kind === 'numMuted' ? 'right' : 'left'
+      };
+    });
+
+    const mkRows = rows => rows.map(r => ({ cells: r.slice(0, 7), status: r[7] }));
+    const calcRows = RESC_ROWS.map((r, idx) => idx === 1 ? [...r.slice(0, 7), 'Calculada'] : r);
+    const onRescAction = label => { if (label === 'Calcular') this.go('r6')(); else if (label === 'Demonstrativo de rescisão') this.go('r7')(); };
+
+    const openMap = this.openMap();
+    const demoRows = DEMO_EVENTS.map(e => {
+      if (e.group) return { toggle:'—', name:e.group, indent:'8px', weight:'700', bg:'var(--sds-bg-hover)', tipo:'', badgeDisplay:'none', badgeClass:'gray', ref:'', prov:'', desc:'', detail:null, onToggle:null, hs:null, toggleCursor:'default', toggleHl:'transparent' };
+      const can = !!(e.key && e.detail);
+      const open = can && !!openMap[e.key];
+      return {
+        toggle: open ? '—' : '+', name:e.name, indent:'32px', weight:'400',
+        bg: open ? 'var(--sds-bg-hover)' : 'var(--sds-bg-surface)',
+        tipo:e.tipo, badgeDisplay:'inline-flex', badgeClass:BADGE[e.tipo] || 'gray',
+        ref:e.ref, prov:e.prov, desc:e.desc, detail: open ? e.detail : null,
+        onToggle: can ? this.toggleRow(e.key) : null, hs: can ? '1' : null,
+        toggleCursor: can ? 'pointer' : 'default',
+        toggleHl: 'transparent'
+      };
+    });
+
+    const demoHeader = [
+      ['Data de admissão','01/06/2026'], ['Data de demissão','03/08/2026'], ['Salário','2.000,00'],
+      ['Data do aviso',''], ['Data de pagamento','13/08/2026'], ['Causa de rescisão','2 - Fim de contrato antecipado empresa'],
+      ['Tipo de rescisão','Normal']
+    ].map(([label, value]) => ({ label, value }));
+
+    const demoBases = [
+      ['Base do FGTS','200,00'], ['Base do FGTS de 13º salário','333,33'], ['Base do FGTS indenizado','0,00'], ['Base do FGTS de 13º salário indenizado','0,00'],
+      ['Base do INSS','200,00'], ['Base do INSS de 13º salário','333,33'], ['Base do IRRF','200,00'], ['Base do IRRF de 13º salário','333,33'],
+      ['Base do IRRF de férias','0,00']
+    ].map(([label, value]) => ({ label, value }));
+
+    const feMk = rows => rows.map(r => ({ cells: r.slice(0, 10), status: r[10] }));
+    const feSrc = { fe1: FE_A, fe2: FE_A, fe3: FE_B, fe4: FE_C }[sc] || FE_A;
+    const feRows = feMk(feSrc);
+    const feHl = sc === 'fe3' ? 7 : (sc === 'fe4' ? 5 : -1);
+    const feMenu = sc === 'fe3'
+      ? { items: ['Calcular'], onPick: this.go('fe4') }
+      : (sc === 'fe4' ? { items: ['Recibo de férias','Excluir cálculo'], onPick: this.go('fe5') } : null);
+
+    const reciboHeader = [
+      ['Período aquisitivo','19/11/2024 - 18/11/2025'], ['Dias de férias','30,00'], ['Data de retorno','01/10/2026'],
+      ['Período de férias','01/09/2026 - 30/09/2026'], ['Dias de abono','0,00'], ['Data de pagamento','28/08/2026'],
+      ['Salário','4.800,00'], ['Dias de licença','0'], ['','']
+    ].map(([label, value]) => ({ label, value }));
+
+    const dpRows = DP_ROWS.map(([nome, cargo], idx) => ({
+      nome, cargo, comp:'03/2026', definicao:'21129 - Folha mensal', empresa:'1 - Empresa 01', filial:'1 - Filial padrão',
+      menuOpen: sc === 'd2' && idx === 0,
+      hs: (idx === 0 && sc === 'd1') ? '1' : null,
+      onAcoes: idx === 0 ? (sc === 'd2' ? this.go('d1') : this.go('d2')) : null
+    }));
+
+    const dpEvents = DP_EVENTS.map(e => {
+      const can = !!e.detail;
+      const open = can && !!openMap[e.key];
+      return {
+        toggle: open ? '—' : '+', name:e.name,
+        bg: open ? 'var(--sds-bg-hover)' : 'var(--sds-bg-surface)',
+        tipo:e.tipo, badgeClass:BADGE[e.tipo] || 'gray',
+        ref:e.ref, prov:e.prov, desc:e.desc, detail: open ? e.detail : null,
+        onToggle: can ? this.toggleRow(e.key) : null, hs: can ? '1' : null,
+        toggleCursor: can ? 'pointer' : 'default'
+      };
+    });
+
+    const esocTabs = [['Envio automático','e2'],['Folha','e3'],['Informações facultativas','e4'],['Categorias opcionais','e5']].map(([label, id]) => ({
+      label, cls: sc === id ? 'active' : '',
+      hs: (sc !== id && ['e2','e3','e4','e5'].includes(sc)) ? '1' : null,
+      onClick: this.go(id)
+    }));
+
+    const esocCategorias = ESOC_CATEGORIAS.map((label, idx) => ({
+      label, checked: idx === 0,
+      cbClass: idx === 0 ? 'on' : '',
+      bg: idx === 0 ? 'var(--sds-bg-hover)' : 'transparent'
+    }));
+
+    const gerRows = GER_ROWS.map(([leiaute, empresa, aguardando, processando, dependencia, erro], idx) => {
+      const first = idx === 0;
+      return {
+        leiaute, empresa, aguardando, processando, dependencia, erro,
+        checked: first && sc === 'g2',
+        cbClass: (first && sc === 'g2') ? 'on' : '',
+        hs: first ? '1' : null,
+        cursor: first ? 'pointer' : 'default',
+        onToggle: first ? this.go(sc === 'g2' ? 'g1' : 'g2') : null
+      };
+    });
+
+    const envRows = ENV_ROWS.map(([leiaute, criacao, indicativo, referencia, empresa, colaborador, resumo, situacao, badgeClass], idx) => {
+      const pend = idx === 2, last = idx === ENV_ROWS.length - 1;
+      const done = sc === 'en2';
+      return {
+        leiaute, criacao, indicativo, referencia, empresa, colaborador, resumo,
+        situacao: (pend && done) ? 'Aguardando envio automático' : situacao,
+        badgeClass: (pend && done) ? 'yellow' : badgeClass,
+        bg: (last && done) ? 'var(--sds-bg-hover)' : 'transparent',
+        cbHs: (pend && !done) ? '1' : null,
+        cursor: pend ? 'pointer' : 'default',
+        onToggle: pend ? this.go(done ? 'en1' : 'en2') : null,
+        detHs: (last && done) ? '1' : null
+      };
+    });
+
+    const fechRows = FECH_ROWS.map(([empresa, codigo, competencia, tipo, remuneracao, pagamento, complementares], idx) => {
+      const first = idx === 0, closed = first && sc === 'fc3';
+      return {
+        empresa, codigo, competencia, tipo, remuneracao, pagamento, complementares,
+        checked: first && sc !== 'fc3',
+        bg: first ? 'var(--sds-bg-hover)' : 'transparent',
+        status: closed ? 'Fechado' : 'Fechamento pendente',
+        badgeClass: closed ? 'green' : 'yellow'
+      };
+    });
+
+    const reciboRows = RECIBO_EVENTS.map(e => {
+      const can = e.key === 'inss';
+      const open = can && !!openMap.feInss;
+      return {
+        toggle: open ? '—' : '+', name: e.name,
+        bg: open ? 'var(--sds-bg-hover)' : 'var(--sds-bg-surface)',
+        tipo: e.tipo, badgeClass: BADGE[e.tipo] || 'gray',
+        ref: e.ref, prov: e.prov, desc: e.desc,
+        onToggle: can ? this.toggleRow('feInss') : null, hs: can ? '1' : null,
+        toggleCursor: can ? 'pointer' : 'default',
+        detail: open ? { lines: INSS_LINES.map(([txt, note]) => ({ txt, note })) } : null
+      };
+    });
+
+    return {
+      menuOpen,
+      menuTitle: node ? node.label : 'Menu',
+      menuItems,
+      railActiveClass: menuOpen ? 'active' : '',
+      toggleMenu: () => this.setState({ menuOpen: !menuOpen }),
+      menuBack: () => this.setState({ path: path.slice(0, -1) }),
+      journeys,
+      s: {
+        home: S('home'), todo: !BUILT.includes(sc) && sc !== 'home',
+        r3: S('r3'), r4: S('r4'), r5: S('r5'), r6: S('r6'), r9: S('r9'),
+        demo: ['r7','r8','r9'].includes(sc),
+        v1: S('v1'), v2: S('v2'),
+        calc: ['f1','f2'].includes(sc), calcModal: S('f2'),
+        imp: ['i1','i2','i3'].includes(sc),
+        impFile: ['i2','i3'].includes(sc), impDone: S('i3'), impEmpty: ['i1','i2'].includes(sc),
+        dpList: ['d1','d2'].includes(sc), dpDetail: S('d3'),
+        h1: S('h1'), h2: S('h2'),
+        e1: S('e1'), e2: S('e2'), e3: S('e3'), e4: S('e4'), e5: S('e5'), e6: S('e6'),
+        esocDef: ['e2','e3','e4','e5'].includes(sc), esocFormFooter: ['e3','e4'].includes(sc),
+        ed1: S('ed1'), ed3: S('ed3'), ed4: S('ed4'),
+        edocsForm: ['ed2','ed3','ed4'].includes(sc), edocsEmpty: ['ed2','ed3'].includes(sc),
+        ger: ['g1','g2'].includes(sc), g1: S('g1'),
+        env: ['en1','en2'].includes(sc),
+        fech: ['fc1','fc2','fc3'].includes(sc), fc2: S('fc2'),
+        cont: ['c1','c2'].includes(sc), c1: S('c1'),
+        wiipo: ['w1','w2','w3','w4','w5'].includes(sc),
+        w1: S('w1'), w2: S('w2'), w3: S('w3'), w4: S('w4'), w5: S('w5'),
+        feList: ['fe1','fe3','fe4'].includes(sc), fe2: S('fe2'),
+        recibo: ['fe5','fe6'].includes(sc)
+      },
+      feRows, feHl, feMenu, reciboHeader, reciboRows,
+      feCount: (sc === 'fe3' || sc === 'fe4') ? 16 : 15,
+      feBtnDisabled: sc === 'fe1',
+      fe2Cols: FE2_COLS.map(([label, icon]) => ({ label, icon, iconStyle: icon === 'circle-info' ? 'solid' : 'regular' })),
+      todoTitle: SCREEN_TITLES[sc] || 'Tela',
+      rescisaoRows: mkRows(RESC_ROWS),
+      rescisaoRowsCalc: mkRows(calcRows),
+      noHl: -1, hlIdx: 3, noMenu: null,
+      processarHs: sc === 'f2' ? null : '1',
+      onRescAction, rescInteractive: [0, 1],
+      lvCols: LV_COLS,
+      lvRows: LV_ROWS.map(cells => ({ cells })),
+      impCols: IMP_COLS,
+      impRows: IMP_ROWS.map(cells => ({ cells })),
+      importar: { disabled: sc === 'i1', hs: sc === 'i1' ? null : '1', onClick: sc === 'i1' ? () => {} : this.go('i3') },
+      formVariavel: FORM_LV.map(([label, value, kind, span]) => ({
+        labelText: label.replace(' *', ''), required: label.endsWith(' *'),
+        value, search: kind === 'search', span
+      })),
+      formRescisao, demoRows, demoHeader, demoBases, crumb, dpRows, dpEvents,
+      hsCols: HS_COLS, hsRows: HS_ROWS.map(cells => ({ cells })),
+      esocDefRows: ESOC_DEF_ROWS.map(([empresa, ambiente, grupo]) => ({ empresa, ambiente, grupo })),
+      esocLayouts: ESOC_LAYOUTS, esocTabs, esocCategorias,
+      esocTopSaveHs: sc === 'e2' ? '1' : null,
+      esocTabSaveHs: ['e3','e4'].includes(sc) ? '1' : null,
+      edocsRows: EDOCS_ROWS.map(([nome, cnpj]) => ({ nome, cnpj })),
+      edocsSaveHs: null,
+      gerRows, gerProcHs: sc === 'g2' ? '1' : null,
+      envRows, fechRows, fecharHs: sc === 'fc1' ? '1' : null,
+      contEmpresa: sc === 'c2' ? '45 - Empresa 06' : '',
+      contDefinicao: sc === 'c2' ? '14545 - Folha mensal - 01/2022' : '',
+      contCompetencia: sc === 'c2' ? '01/2022' : '',
+      contData: sc === 'c2' ? '29/07/2026' : '',
+      contProcHs: sc === 'c2' ? '1' : null,
+      contFillHs: sc === 'c1' ? '1' : null,
+      contFill: sc === 'c1' ? this.go('c2') : null,
+      wiipoTabs: [['Ativação','w1'],['Empresas','w2'],['Colaboradores','w3'],['Holerites','w4'],['Configurações','w5']].map(([label, id]) => ({
+        label, cls: sc === id ? 'active' : '',
+        hs: (sc !== id && ['w1','w2','w3','w4','w5'].includes(sc)) ? '1' : null,
+        onClick: this.go(id)
+      })),
+      nav: {
+        home: () => this.setState({ screen:'home', path:[], menuOpen:false, journey:null, open:null }),
+        r4: this.go('r4'), r5: this.go('r5'),
+        v1: this.go('v1'), v2: this.go('v2'), i2: this.go('i2'),
+        f1: this.go('f1'), f2: this.go('f2'), d3: this.go('d3'),
+        h1: this.go('h1'), h2: this.go('h2'),
+        e1: this.go('e1'), e2: this.go('e2'), e5: this.go('e5'), e6: this.go('e6'),
+        ed1: this.go('ed1'), ed2: this.go('ed2'), ed3: this.go('ed3'), ed4: this.go('ed4'),
+        fc1: this.go('fc1'), fc2: this.go('fc2'), fc3: this.go('fc3'),
+        c2: this.go('c2'),
+        fe1: this.go('fe1'), fe2: this.go('fe2'), fe3: this.go('fe3'),
+        prev: step(-1), next: step(1)
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

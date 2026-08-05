@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/colors_and_type.css">
+<link rel="stylesheet" href="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/ui_kits/sds-desktop/sds-desktop.css">
+<script src="_ds/sds-web-a87a9e9b-2cd4-477d-89f9-a3904adddecc/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</helmet>
+<div style="overflow-x:auto;">
+  <table class="sds-table" style="min-width:1500px;">
+    <thead>
+      <tr>
+        <th style="width:46px;"><div class="cb"></div></th>
+        <sc-for list="{{ cols }}" as="c" hint-placeholder-count="10">
+          <th class="sortable" style="white-space:normal; min-width:110px;">{{ c }} <i class="fa-solid fa-sort sortarrow"></i></th>
+        </sc-for>
+        <th style="min-width:110px;">Status</th>
+        <th style="width:120px;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ rows }}" as="r" hint-placeholder-count="10">
+        <tr class="{{ r.rowClass }}">
+          <td><div class="cb {{ r.cbClass }}"><i class="fa-solid fa-check"></i></div></td>
+          <sc-for list="{{ r.cells }}" as="cell" hint-placeholder-count="10">
+            <td style="white-space:nowrap;">{{ cell }}</td>
+          </sc-for>
+          <td><span class="badge {{ r.badgeClass }}">{{ r.status }}</span></td>
+          <td style="position:relative;">
+            <button class="btn btn-default btn-small" disabled="{{ r.disabled }}" style="min-width:96px; justify-content:space-between;">Ações <i class="fa-solid fa-caret-down"></i></button>
+            <sc-if value="{{ r.menu }}" hint-placeholder-val="{{ false }}">
+              <div class="menu" style="position:absolute; top:44px; right:10px; z-index:20; min-width:220px;">
+                <sc-for list="{{ r.menu.items }}" as="mi" hint-placeholder-count="1">
+                  <div class="menu-item" data-hs="1" onClick="{{ r.menu.onPick }}">{{ mi }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:520},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Array&lt;{cells:string[],status:string}&gt;&quot;},&quot;highlight&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:-1,&quot;tsType&quot;:&quot;number&quot;},&quot;menu&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{items:string[],onPick:()=&gt;void}|null&quot;}}">
+const COLS = ['Código da empresa','Nome da empresa','Código do colaborador','Nome do colaborador','Início do período aquisitivo','Fim do período aquisitivo','Início das férias','Fim das férias','Dias de férias','Dias de abono'];
+
+class Component extends DCLogic {
+  renderVals() {
+    const hl = this.props.highlight ?? -1;
+    const menu = this.props.menu || null;
+    const rows = (this.props.rows || []).map((r, idx) => {
+      const on = idx === hl;
+      return {
+        cells: r.cells,
+        status: r.status,
+        rowClass: on ? 'selected' : '',
+        cbClass: on ? 'checked' : '',
+        badgeClass: r.status === 'Calculada' ? 'yellow' : 'blue',
+        disabled: r.status === 'Programada' && !on,
+        menu: on && menu ? menu : null
+      };
+    });
+    return { cols: COLS, rows };
+  }
+}
+
+</script>
+</body>
+</html>
