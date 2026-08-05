@@ -26,11 +26,31 @@
 </helmet>
 
 <div style="position:fixed; inset:0; display:flex; flex-direction:column; font-family:var(--sds-font-family); color:var(--sds-fg-default); background:#22252b; overflow:hidden;">
+        <sc-if value="{{ toastProc }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:12px; right:20px; background:#2C8FA8; color:#fff; border-radius:3px; box-shadow:0 4px 2.5px rgba(0,0,0,0.20); display:flex; align-items:flex-start; gap:12px; padding:14px 16px; min-width:330px; z-index:60;">
+            <i class="fa-solid fa-circle-info" style="font-size:16px; margin-top:2px;"></i>
+            <div style="flex:1;">
+              <div style="font-size:13px; font-weight:700;">Notificações</div>
+              <div style="font-size:13px; margin-top:2px;">Você tem 5 notificações não lidas!</div>
+            </div>
+            <i class="fa-solid fa-xmark" onClick="{{ nav.closeToast }}" style="font-size:14px; cursor:pointer;"></i>
+          </div>
+        </sc-if>
+        <sc-if value="{{ toastOk }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; top:12px; right:20px; background:#EDF7E3; border:1px solid #CFE6B4; border-radius:3px; box-shadow:0 4px 2.5px rgba(0,0,0,0.15); display:flex; align-items:center; gap:12px; padding:10px 14px; max-width:300px; z-index:60;">
+            <div style="width:26px; height:26px; border-radius:50%; background:var(--sds-criticality-green); color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px;"><i class="fa-solid fa-check"></i></div>
+            <div style="flex:1;">
+              <div style="font-size:12px; font-weight:700; color:#5A6B4A;">Sucesso</div>
+              <div style="font-size:12px; color:#6E7B60; margin-top:1px;">{{ toastOkText }}</div>
+            </div>
+            <i class="fa-solid fa-xmark" onClick="{{ nav.closeToast }}" style="font-size:12px; color:#8AA46B; cursor:pointer;"></i>
+          </div>
+        </sc-if>
 
   <div style="flex:1; min-height:0; display:flex;">
 
     <div class="sds-navbar" style="flex-shrink:0; height:100%; min-height:0; position:relative;">
-      <div class="nav-brand" data-hs="1" onClick="{{ toggleMenu }}" style="cursor:pointer;"><span class="nav-favicon"><img src="assets/senior-glyph.svg" alt="Senior" style="height:30px; width:auto;"></span></div>
+      <div class="nav-brand" onClick="{{ toggleMenu }}" style="cursor:pointer;"><span class="nav-favicon"><img src="assets/senior-glyph.svg" alt="Senior" style="height:30px; width:auto;"></span></div>
       <div class="nav-items">
         <div class="nav-item"><i class="fa-regular fa-circle-user"></i></div>
         <div class="nav-item" style="position:relative;"><i class="fa-regular fa-bell"></i><span style="position:absolute; top:10px; left:33px; background:var(--sds-criticality-red); color:#fff; font-size:9px; line-height:1; padding:2px 4px; border-radius:8px;">3</span></div>
@@ -38,7 +58,7 @@
         <div class="nav-item"><i class="fa-solid fa-star"></i></div>
         <div class="nav-item"><i class="fa-regular fa-file-lines"></i></div>
         <div class="nav-item"><i class="fa-solid fa-box-archive"></i></div>
-        <div class="nav-item {{ railActiveClass }}" data-hs="1" onClick="{{ toggleMenu }}" style="cursor:pointer;"><i class="fa-solid fa-people-group"></i></div>
+        <div class="nav-item {{ railActiveClass }}" onClick="{{ toggleMenu }}" style="cursor:pointer;"><i class="fa-solid fa-people-group"></i></div>
         <div class="nav-item"><i class="fa-solid fa-truck"></i></div>
         <div class="nav-item"><i class="fa-solid fa-briefcase"></i></div>
         <div class="nav-item"><i class="fa-solid fa-shop"></i></div>
@@ -61,12 +81,12 @@
           <i class="fa-solid fa-people-group" style="font-size:18px; opacity:.9;"></i> Gestão de Pessoas | HCM
         </div>
         <div style="display:flex; align-items:center; padding:8px 20px 16px; border-bottom:1px solid var(--sds-navbar-bg-hover);">
-          <i data-hs="1" onClick="{{ menuBack }}" class="fa-solid fa-chevron-left" style="color:#fff; font-size:14px; cursor:pointer; padding:4px;"></i>
+          <i onClick="{{ menuBack }}" class="fa-solid fa-chevron-left" style="color:#fff; font-size:14px; cursor:pointer; padding:4px;"></i>
           <div style="flex:1; text-align:center; color:#fff; font-size:14px;">{{ menuTitle }}</div>
         </div>
         <div style="flex:1; overflow-y:auto; padding-top:4px;">
           <sc-for list="{{ menuItems }}" as="mi" hint-placeholder-count="9">
-            <div data-hs="1" onClick="{{ mi.onClick }}" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px; color:#fff; font-size:14px; cursor:pointer; background:{{ mi.bg }};" style-hover="background:var(--sds-navbar-bg-hover);">
+            <div onClick="{{ mi.onClick }}" style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 20px; color:#fff; font-size:14px; cursor:pointer; background:{{ mi.bg }};" style-hover="background:var(--sds-navbar-bg-hover);">
               <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ mi.label }}</span>
               <sc-if value="{{ mi.isBranch }}" hint-placeholder-val="{{ true }}">
                 <i class="fa-solid fa-chevron-right" style="font-size:12px; opacity:.9; flex-shrink:0;"></i>
@@ -81,21 +101,30 @@
     </sc-if>
 
     <div style="flex:1; min-width:0; background:var(--sds-bg-page); display:flex; flex-direction:column; overflow:hidden;">
-      <div class="sds-topbar"><span class="title-module">Gestão de Pessoas</span></div>
+      <div class="sds-topbar" style="position:relative;"><span class="title-module">Gestão de Pessoas</span>
+      </div>
       <div style="flex:1; overflow-y:auto;">
 
+        <sc-if value="{{ fb }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:18px 24px 0; background:{{ fbBg }}; border-left:4px solid {{ fbBar }}; display:flex; align-items:center; gap:16px; padding:16px 18px;">
+            <div style="width:34px; height:34px; border-radius:50%; background:{{ fbBar }}; color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i class="{{ fbIcon }}"></i></div>
+            <div style="flex:1; font-size:13px; color:var(--sds-fg-default);">{{ fbText }} <sc-if value="{{ fbProc }}" hint-placeholder-val="{{ false }}"><a href="#">clique aqui</a></sc-if></div>
+            <i class="fa-solid fa-xmark" onClick="{{ nav.closeFb }}" style="color:var(--sds-fg-muted); cursor:pointer;"></i>
+          </div>
+        </sc-if>
+
         <sc-if value="{{ s.home }}" hint-placeholder-val="{{ true }}">
-          <div style="padding:48px 56px;">
-            <div style="font-family:Inter,var(--sds-font-family); font-size:28px; color:var(--sds-fg-default); margin-bottom:6px;">Folha de Pagamento X</div>
-            <div style="font-size:14px; color:var(--sds-fg-muted); margin-bottom:32px;">Escolha uma jornada abaixo ou navegue pelo menu lateral.</div>
-            <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; max-width:1100px;">
+          <div style="padding:20px 32px 24px;">
+            <div style="font-family:Inter,var(--sds-font-family); font-size:24px; color:var(--sds-fg-default); margin-bottom:4px;">Folha de Pagamento X</div>
+            <div style="font-size:13px; color:var(--sds-fg-muted); margin-bottom:16px;">Escolha uma jornada abaixo ou navegue pelo menu lateral.</div>
+            <div style="display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px;">
               <sc-for list="{{ journeys }}" as="j" hint-placeholder-count="15">
-                <div data-hs="1" onClick="{{ j.onClick }}" style="background:var(--sds-bg-surface); border:1px solid var(--sds-border-subtle); border-radius:4px; padding:20px; cursor:pointer; opacity:{{ j.opacity }};" style-hover="border-color:var(--sds-primary);">
-                  <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
-                    <div style="width:32px; height:32px; border-radius:4px; background:var(--sds-badge-blue-bg); color:var(--sds-primary); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">{{ j.num }}</div>
-                    <div style="font-size:14px; font-weight:700; color:var(--sds-fg-default);">{{ j.name }}</div>
+                <div onClick="{{ j.onClick }}" style="background:var(--sds-bg-surface); border:1px solid var(--sds-border-subtle); border-radius:4px; padding:14px; cursor:pointer; opacity:{{ j.opacity }};" style-hover="border-color:var(--sds-primary);">
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+                    <div style="width:28px; height:28px; border-radius:4px; background:var(--sds-badge-blue-bg); color:var(--sds-primary); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">{{ j.num }}</div>
+                    <div style="font-size:13px; font-weight:700; color:var(--sds-fg-default); line-height:1.3;">{{ j.name }}</div>
                   </div>
-                  <div style="font-size:12px; color:var(--sds-fg-muted); line-height:1.5;">{{ j.desc }}</div>
+                  <div style="font-size:11px; color:var(--sds-fg-muted); line-height:1.45;">{{ j.desc }}</div>
                 </div>
               </sc-for>
             </div>
@@ -108,6 +137,208 @@
             <div style="color:var(--sds-primary); font-size:13px; margin-bottom:18px;"><i class="fa-solid fa-house"></i></div>
             <div class="panel">
               <div class="empty-state"><div class="icon"><i class="fa-regular fa-folder-open"></i></div><h3>Tela ainda não montada</h3><p>Esta etapa da jornada será construída na próxima rodada.</p></div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.cgList }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Colaboradores</h1></div>
+            <div style="font-size:13px; margin-bottom:18px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Gestão de pessoas</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">HRIS</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> Colaboradores</div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header" style="margin:0; padding:0; border:0;"><span class="title">Filtros</span><div class="actions"><i class="fa-solid fa-plus"></i></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Colaboradores</span></div>
+              <div class="tabs" style="padding:0; margin-bottom:16px;"><div class="tab active">Empregados</div><div class="tab">Rascunhos</div></div>
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                <button class="btn btn-primary"><i class="fa-solid fa-user-plus"></i>Novo colaborador</button>
+                <button class="btn btn-secondary"><i class="fa-solid fa-user-xmark"></i>Ver exclusões</button>
+                <div style="flex:1;"></div>
+                <div style="display:flex; font-size:13px; border:1px solid var(--sds-border-default); border-radius:3px; overflow:hidden;">
+                  <span style="padding:7px 14px; cursor:pointer;">Todos (36)</span>
+                  <span style="padding:7px 14px; background:var(--sds-bg-hover); border-left:1px solid var(--sds-border-default); border-right:1px solid var(--sds-border-default);">Trabalhando (31)</span>
+                  <span style="padding:7px 14px; cursor:pointer;">Desligado (5)</span>
+                </div>
+              </div>
+              <table style="width:100%; border-collapse:collapse; font-size:13px;">
+                <thead>
+                  <tr style="border-bottom:1px solid var(--sds-border-subtle); color:var(--sds-fg-default);">
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:110px;">Cadastro <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700;">Colaborador <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:150px;">Vínculo <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:110px;">Posição <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:120px;">Admissão <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:130px;">Situação <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:170px;">Empresa <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:150px;">Filial <i class="fa-solid fa-sort" style="color:var(--sds-primary); font-size:11px;"></i></th>
+                    <th style="text-align:left; padding:12px 8px; font-weight:700; width:140px;">Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ cgRows }}" as="r" hint-placeholder-count="8">
+                    <tr style="border-bottom:1px solid var(--sds-bg-hover);">
+                      <td style="padding:14px 8px;">{{ r.cadastro }}</td>
+                      <td style="padding:14px 8px;">
+                        <div style="color:var(--sds-primary);">{{ r.nome }}</div>
+                        <div style="color:var(--sds-fg-muted); margin-top:3px; font-size:12px;">{{ r.cargo }}</div>
+                      </td>
+                      <td style="padding:14px 8px;">
+                        <div>{{ r.vinculo }}</div>
+                        <div style="color:var(--sds-primary); margin-top:3px;">{{ r.vinculoCod }}</div>
+                      </td>
+                      <td style="padding:14px 8px;">
+                        <div>Adm</div>
+                        <div style="color:var(--sds-primary); margin-top:3px;">1</div>
+                      </td>
+                      <td style="padding:14px 8px;">{{ r.admissao }}</td>
+                      <td style="padding:14px 8px;"><span class="badge green">Trabalhando</span></td>
+                      <td style="padding:14px 8px;">
+                        <div style="color:var(--sds-primary);">{{ r.empresa }}</div>
+                        <div style="color:var(--sds-primary); margin-top:3px;">{{ r.empresaCod }}</div>
+                      </td>
+                      <td style="padding:14px 8px;">
+                        <div style="color:var(--sds-primary);">{{ r.filial }}</div>
+                        <div style="color:var(--sds-primary); margin-top:3px;">1</div>
+                      </td>
+                      <td style="padding:12px 8px; position:relative;">
+                        <button class="btn btn-secondary" data-hs="{{ r.hs }}" onClick="{{ r.onAcoes }}" style="display:inline-flex; align-items:center; gap:18px;">Ações <i class="fa-solid fa-caret-down"></i></button>
+                        <sc-if value="{{ r.menuOpen }}" hint-placeholder-val="{{ false }}">
+                          <div style="position:absolute; top:48px; right:8px; background:var(--sds-bg-surface); border:1px solid var(--sds-border-subtle); border-radius:4px; box-shadow:0 4px 2.5px rgba(0,0,0,0.20); min-width:210px; z-index:30; padding:6px 0;">
+                            <div data-hs="1" onClick="{{ nav.cg3 }}" style="padding:10px 16px; cursor:pointer; white-space:nowrap;" style-hover="background:var(--sds-bg-hover);">Editar</div>
+                            <div style="padding:10px 16px; white-space:nowrap;" style-hover="background:var(--sds-bg-hover);">Históricos eventuais</div>
+                            <div style="padding:10px 16px; white-space:nowrap;" style-hover="background:var(--sds-bg-hover);">Históricos contratuais</div>
+                            <div style="padding:10px 16px; white-space:nowrap;" style-hover="background:var(--sds-bg-hover);">Históricos pessoais</div>
+                            <div style="padding:10px 16px; white-space:nowrap;" style-hover="background:var(--sds-bg-hover);">Dependentes</div>
+                            <div style="padding:10px 16px; white-space:nowrap;" style-hover="background:var(--sds-bg-hover);">Gerar relatório</div>
+                            <div style="padding:10px 16px; white-space:nowrap;" style-hover="background:var(--sds-bg-hover);">Excluir</div>
+                          </div>
+                        </sc-if>
+                      </td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
+                <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-left"></i></span>
+                  <span style="background:var(--sds-primary); color:#fff; padding:6px 13px; border-radius:3px;">1</span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angle-right"></i></span>
+                  <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-right"></i></span>
+                  <span style="margin-left:12px; border:1px solid var(--sds-border-default); border-radius:3px; padding:7px 12px; display:flex; align-items:center; gap:22px;">20 <i class="fa-solid fa-caret-down" style="color:var(--sds-fg-muted);"></i></span>
+                </div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">36 registro(s) encontrado(s)</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s.cg3 }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 24px;">
+            <div class="page-header" style="margin-bottom:8px;"><h1>Jornada da admissão</h1></div>
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px; margin-bottom:8px;">
+              <div style="font-size:13px; color:var(--sds-fg-muted);"><i class="fa-solid fa-house" style="color:var(--sds-primary);"></i> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Gestão de pessoas</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">HRIS</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> <a href="#">Colaboradores</a> <span style="margin:0 6px; color:var(--sds-primary);">&rsaquo;</span> Jornada da admissão</div>
+              <button class="btn btn-secondary" style="display:inline-flex; align-items:center; gap:18px;">Históricos <i class="fa-solid fa-caret-down"></i></button>
+            </div>
+            <div style="display:flex; align-items:flex-start; padding:20px 40px 24px;">
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; width:150px;">
+                <div style="width:36px; height:36px; border-radius:50%; border:2px solid var(--sds-primary); color:var(--sds-primary); display:flex; align-items:center; justify-content:center; font-size:14px; background:#fff;">1</div>
+                <div style="font-size:13px; font-weight:700; color:var(--sds-fg-default);">Dados pessoais</div>
+              </div>
+              <div style="flex:1; height:1px; background:var(--sds-border-default); margin-top:18px;"></div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; width:150px;">
+                <div style="width:36px; height:36px; border-radius:50%; border:2px solid var(--sds-border-default); color:var(--sds-fg-muted); display:flex; align-items:center; justify-content:center; font-size:14px; background:#fff;">2</div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">Dados contratuais</div>
+              </div>
+              <div style="flex:1; height:1px; background:var(--sds-border-default); margin-top:18px;"></div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; width:150px;">
+                <div style="width:36px; height:36px; border-radius:50%; border:2px solid var(--sds-border-default); color:var(--sds-fg-muted); display:flex; align-items:center; justify-content:center; font-size:14px; background:#fff;">3</div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">Dados dependentes</div>
+              </div>
+              <div style="flex:1; height:1px; background:var(--sds-border-default); margin-top:18px;"></div>
+              <div style="display:flex; flex-direction:column; align-items:center; gap:8px; width:150px;">
+                <div style="width:36px; height:36px; border-radius:50%; border:2px solid var(--sds-border-default); color:var(--sds-fg-muted); display:flex; align-items:center; justify-content:center; font-size:14px; background:#fff;">4</div>
+                <div style="font-size:13px; color:var(--sds-fg-muted);">Usuário</div>
+              </div>
+            </div>
+            <div class="panel" style="margin-bottom:16px; display:flex; align-items:center; gap:32px;">
+              <div style="display:flex; align-items:center; gap:14px; min-width:260px;">
+                <div style="width:52px; height:52px; border-radius:50%; background:var(--sds-border-subtle); display:flex; align-items:center; justify-content:center; color:#a8a8b4; font-size:22px;"><i class="fa-regular fa-image"></i></div>
+                <div>
+                  <div style="font-size:14px; font-weight:700; color:var(--sds-fg-default);">Colaborador 01</div>
+                  <div style="font-size:13px; color:var(--sds-fg-muted); margin-top:2px;">1 - Auxiliar Adm</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:44px; border-left:1px solid var(--sds-border-subtle); padding-left:32px; font-size:13px;">
+                <div><div style="color:var(--sds-fg-muted);">Cadastro</div><div style="font-weight:700; margin-top:4px;">965</div></div>
+                <div><div style="color:var(--sds-fg-muted);">Vínculo</div><div style="font-weight:700; margin-top:4px;">5 - Empregado - Geral</div></div>
+                <div><div style="color:var(--sds-fg-muted);">Admissão</div><div style="font-weight:700; margin-top:4px;">20/07/2026</div></div>
+                <div><div style="color:var(--sds-fg-muted);">Data de nascimento</div><div style="font-weight:700; margin-top:4px;">31/03/1990</div></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><span class="title">Dados do colaborador</span><div class="actions"><i class="fa-solid fa-circle-info"></i></div></div>
+              <div class="tabs" style="padding:0; margin-bottom:20px;"><div class="tab active">Pessoais</div><div class="tab">Documentos</div></div>
+              <div style="background:var(--sds-bg-hover); padding:9px 14px; font-size:13px; margin-bottom:16px;">Foto</div>
+              <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+                <div style="width:56px; height:56px; border-radius:50%; background:var(--sds-border-subtle); display:flex; align-items:center; justify-content:center; color:#a8a8b4; font-size:24px;"><i class="fa-solid fa-user"></i></div>
+                <div>
+                  <div style="font-size:13px;"><strong>Arraste sua foto ou</strong> <a href="#">Selecione um arquivo</a></div>
+                  <div style="font-size:12px; color:var(--sds-fg-subtle); margin-top:3px;">Formato: JPG, PNG (máximo de 5 MB)</div>
+                </div>
+              </div>
+              <sc-for list="{{ cgGroups }}" as="g" hint-placeholder-count="6">
+                <div>
+                  <div style="background:var(--sds-bg-hover); padding:9px 14px; font-size:13px; margin-bottom:16px;">{{ g.title }}</div>
+                  <div style="display:grid; grid-template-columns:{{ g.cols }}; gap:18px 20px; margin-bottom:24px;">
+                    <sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="4">
+                      <div class="field">
+                        <div class="label" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ f.labelText }}<sc-if value="{{ f.required }}" hint-placeholder-val="{{ false }}"><span class="req"> *</span></sc-if></div>
+                        <div class="input-shell {{ f.shellClass }}">
+                          <input readOnly="{{ true }}" value="{{ f.value }}" placeholder="{{ f.placeholder }}">
+                          <sc-if value="{{ f.affixSearch }}" hint-placeholder-val="{{ false }}">
+                            <span class="affix"><i class="fa-solid fa-magnifying-glass"></i></span>
+                          </sc-if>
+                          <sc-if value="{{ f.affixDate }}" hint-placeholder-val="{{ false }}">
+                            <span class="affix"><i class="fa-regular fa-calendar-days"></i></span>
+                          </sc-if>
+                          <sc-if value="{{ f.affixCaret }}" hint-placeholder-val="{{ false }}">
+                            <div class="caret"><i class="fa-solid fa-caret-down"></i></div>
+                          </sc-if>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+              <div style="background:var(--sds-bg-hover); padding:9px 14px; font-size:13px; margin-bottom:16px;">Deficiência</div>
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px 20px;">
+                <div class="field">
+                  <div class="label">Pessoa com deficiência</div>
+                  <div style="display:flex; align-items:center; gap:10px;"><div style="width:38px; height:20px; border-radius:10px; background:var(--sds-border-default); position:relative;"><div style="position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff;"></div></div><span style="font-size:13px;">Não</span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Preenche cota</div>
+                  <div style="display:flex; align-items:center; gap:10px;"><div style="width:38px; height:20px; border-radius:10px; background:var(--sds-border-default); position:relative;"><div style="position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff;"></div></div><span style="font-size:13px;">Não</span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Reabilitado</div>
+                  <div style="display:flex; align-items:center; gap:10px;"><div style="width:38px; height:20px; border-radius:10px; background:var(--sds-border-default); position:relative;"><div style="position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff;"></div></div><span style="font-size:13px;">Não</span></div>
+                </div>
+                <div class="field">
+                  <div class="label">Deficiências</div>
+                  <div class="input-shell disabled"><input readOnly="{{ true }}" placeholder="Selecione a deficiência"><div class="caret"><i class="fa-solid fa-caret-down"></i></div></div>
+                </div>
+              </div>
+              <div class="field" style="margin-top:18px;">
+                <div class="label">Observação</div>
+                <div class="input-shell textarea-shell" style="height:110px;"><textarea readOnly="{{ true }}"></textarea></div>
+              </div>
+              <div class="panel-footer">
+                <a href="#">Cancelar</a>
+                <div class="right"><button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbCg3 }}">Salvar pessoa <i class="fa-solid fa-arrow-right"></i></button></div>
+              </div>
             </div>
           </div>
         </sc-if>
@@ -127,7 +358,7 @@
                 <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
                 <button class="btn btn-secondary">Recarregar</button>
               </div>
-              <dc-import name="TabelaRescisao" rows="{{ rescisaoRows }}" interactive="{{ rescInteractive }}" on-action="{{ onRescAction }}" hint-size="100%,520px"></dc-import>
+              <dc-import name="TabelaRescisao" rows="{{ rescisaoRowsBefore }}" interactive="{{ rescNone }}" on-action="{{ onRescAction }}" hint-size="100%,520px"></dc-import>
             </div>
           </div>
         </sc-if>
@@ -172,9 +403,8 @@
               </div>
               <div style="font-size:12px; color:var(--sds-fg-subtle); margin:22px 0 18px; border-top:1px solid var(--sds-border-subtle); padding-top:16px;">Criado por usuario@empresa.com.br em 29/07/2026 07:36:11 às 29/07/2026 07:36:11. Atualizado por usuario@empresa.com.br em 29/07/2026 07:36:11 às 29/07/2026 07:36:11.</div>
               <div style="display:flex; gap:10px; align-items:center;">
-                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.r5 }}">Salvar</button>
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbRescSave }}">Salvar</button>
                 <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
-                <button class="btn btn-secondary" data-hs="1" onClick="{{ nav.r5 }}">Calcular</button>
                 <button class="btn btn-tertiary" data-hs="1" onClick="{{ nav.r5 }}">Cancelar</button>
               </div>
             </div>
@@ -372,7 +602,7 @@
                 </div>
                 <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid var(--sds-border-subtle); padding:14px 22px;">
                   <button class="btn btn-secondary" data-hs="1" onClick="{{ nav.f1 }}">Não</button>
-                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.f1 }}">Sim</button>
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbFolha }}">Sim</button>
                 </div>
               </div>
             </div>
@@ -450,7 +680,7 @@
               </div>
               <div style="font-size:12px; color:var(--sds-fg-subtle); margin:18px 0 0; line-height:1.7;">Criado por usuario@empresa.com.br em 15/12/2025 às 10:52.<br>Atualizado por usuario@empresa.com.br em 15/12/2025 às 11:32.</div>
               <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); margin-top:18px; padding-top:18px;">
-                <button class="btn btn-primary" data-hs="{{ esocTopSaveHs }}" onClick="{{ nav.e1 }}">Salvar</button>
+                <button class="btn btn-primary" data-hs="{{ esocTopSaveHs }}" onClick="{{ nav.fbEsoc }}">Salvar</button>
                 <a href="#" onClick="{{ nav.e1 }}" style="font-size:13px;">Cancelar</a>
                 <div style="flex:1;"></div>
                 <button class="btn btn-primary">Carga de tabelas</button>
@@ -489,11 +719,11 @@
                 <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:16px;">
                   <div>
                     <div style="font-size:13px; margin-bottom:10px;">Enviar observação do evento</div>
-                    <div class="sw"></div>
+                    <div class="sw {{ swObsClass }}" data-hs="1" onClick="{{ toggleObs }}" style="cursor:pointer;"></div>
                   </div>
                   <div>
                     <div style="font-size:13px; margin-bottom:10px;">Enviar horário contratual</div>
-                    <div class="sw"></div>
+                    <div class="sw {{ swHorClass }}" onClick="{{ toggleHor }}" style="cursor:pointer;"></div>
                   </div>
                 </div>
               </sc-if>
@@ -512,7 +742,7 @@
 
               <sc-if value="{{ s.esocFormFooter }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); margin-top:22px; padding-top:18px;">
-                  <button class="btn btn-primary" data-hs="{{ esocTabSaveHs }}" onClick="{{ nav.e1 }}">Salvar</button>
+                  <button class="btn btn-primary" data-hs="{{ esocTabSaveHs }}" onClick="{{ nav.fbEsoc }}">Salvar</button>
                   <a href="#" onClick="{{ nav.e1 }}" style="font-size:13px;">Cancelar</a>
                 </div>
               </sc-if>
@@ -551,7 +781,7 @@
               </table>
               <div style="font-size:12px; color:var(--sds-fg-subtle); margin:18px 0 0;">Criado por usuario@empresa.com.br em 02/07/2026 às 09:08. Atualizado por usuario@empresa.com.br em 02/07/2026 às 09:08.</div>
               <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); margin-top:18px; padding-top:18px;">
-                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.e5 }}">Salvar</button>
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbEsocLeiaute }}">Salvar</button>
                 <a href="#" onClick="{{ nav.e5 }}" style="font-size:13px;">Cancelar</a>
               </div>
             </div>
@@ -625,7 +855,7 @@
               </div>
               <div style="font-size:12px; color:var(--sds-fg-subtle); margin:18px 0 0;">Criado por usuario@empresa.com.br em 02/07/2026 às 09:15. Atualizado por usuario@empresa.com.br em 02/07/2026 às 09:15.</div>
               <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); margin-top:18px; padding-top:18px;">
-                <button class="btn btn-primary" data-hs="{{ edocsSaveHs }}" onClick="{{ nav.ed1 }}">Salvar</button>
+                <button class="btn btn-primary" data-hs="{{ edocsSaveHs }}" onClick="{{ nav.fbEdocs }}">Salvar</button>
                 <a href="#" onClick="{{ nav.ed1 }}" style="font-size:13px;">Cancelar</a>
               </div>
             </div>
@@ -675,7 +905,7 @@
                   </div>
                 </div>
                 <div style="display:flex; align-items:center; gap:16px; border-top:1px solid var(--sds-border-subtle); padding:16px 26px;">
-                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.ed4 }}">Salvar</button>
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbEdocsTipo }}">Salvar</button>
                   <a href="#" onClick="{{ nav.ed2 }}" style="font-size:13px;">Cancelar</a>
                 </div>
               </div>
@@ -698,7 +928,7 @@
             <div class="panel">
               <div class="panel-header"><span class="title">Pendências de geração <i class="fa-solid fa-rotate" style="color:var(--sds-primary); font-size:12px; margin-left:6px;"></i></span></div>
               <div style="display:flex; align-items:center; gap:10px; padding:18px 0;">
-                <button class="btn btn-primary" data-hs="{{ gerProcHs }}" onClick="{{ nav.home }}" disabled="{{ s.g1 }}">Processar marcados</button>
+                <button class="btn btn-primary" data-hs="{{ gerProcHs }}" onClick="{{ nav.fbGeracao }}" disabled="{{ s.g1 }}">Processar marcados</button>
                 <button class="btn btn-secondary">Processar filtrados</button>
                 <div style="flex:1;"></div>
                 <div style="display:flex; border:1px solid var(--sds-border-default); border-radius:3px; overflow:hidden; font-size:13px;">
@@ -709,7 +939,7 @@
               <table class="sds-table">
                 <thead>
                   <tr>
-                    <th style="width:46px;"><div class="cb"></div></th>
+                    <th style="width:46px;"><div class="cb {{ gerAllClass }}" data-hs="{{ gerAllHs }}" onClick="{{ gerAllToggle }}" style="cursor:{{ gerAllCursor }};"><sc-if value="{{ gerAllChecked }}" hint-placeholder-val="{{ false }}"><i class="fa-solid fa-check"></i></sc-if></div></th>
                     <th class="sortable">Leiaute <i class="fa-solid fa-sort sortarrow"></i></th>
                     <th class="sortable">Empresa <i class="fa-solid fa-sort sortarrow"></i></th>
                     <th>Aguardando</th><th>Processando</th><th>Com dependência</th><th>Com erro</th>
@@ -718,7 +948,7 @@
                 <tbody>
                   <sc-for list="{{ gerRows }}" as="r" hint-placeholder-count="8">
                     <tr>
-                      <td><div class="cb" data-hs="{{ r.hs }}" onClick="{{ r.onToggle }}" style="cursor:{{ r.cursor }};"><sc-if value="{{ r.checked }}" hint-placeholder-val="{{ false }}"><i class="fa-solid fa-check"></i></sc-if></div></td>
+                      <td><div class="cb {{ r.cbClass }}" style="cursor:default;"><sc-if value="{{ r.checked }}" hint-placeholder-val="{{ false }}"><i class="fa-solid fa-check"></i></sc-if></div></td>
                       <td>{{ r.leiaute }}</td>
                       <td><a href="#">{{ r.empresa }}</a></td>
                       <td>{{ r.aguardando }}</td><td>{{ r.processando }}</td>
@@ -869,7 +1099,7 @@
                 <div style="padding:6px 22px 22px; font-size:13px; line-height:1.6;">Será criada uma pendência para o leiaute S-1299.</div>
                 <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid var(--sds-border-subtle); padding:14px 22px;">
                   <button class="btn btn-secondary" data-hs="1" onClick="{{ nav.fc1 }}">Não</button>
-                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fc3 }}">Sim</button>
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbFech }}">Sim</button>
                 </div>
               </div>
             </div>
@@ -955,7 +1185,7 @@
                     <div class="sw on"></div>
                   </div>
                 </div>
-                <div style="margin-top:22px;"><button class="btn btn-primary" data-hs="1" onClick="{{ nav.home }}">Salvar</button></div>
+                <div style="margin-top:22px;"><button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbWiipo }}">Salvar</button></div>
               </sc-if>
             </div>
           </div>
@@ -986,7 +1216,7 @@
                 </div>
               </div>
               <div style="display:flex; gap:16px; align-items:center; border-top:1px solid var(--sds-border-subtle); margin-top:26px; padding-top:18px;">
-                <button class="btn btn-primary" data-hs="{{ contProcHs }}" onClick="{{ nav.c2 }}" disabled="{{ s.c1 }}">Processar</button>
+                <button class="btn btn-primary" data-hs="{{ contProcHs }}" onClick="{{ nav.fbContabil }}" disabled="{{ s.c1 }}">Processar</button>
                 <a href="#" style="font-size:13px;">Limpar</a>
               </div>
             </div>
@@ -1090,7 +1320,7 @@
                 </div>
               </div>
               <div style="display:flex; gap:16px; align-items:center; border-top:1px solid var(--sds-border-subtle); margin-top:26px; padding-top:18px;">
-                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.h1 }}">Salvar</button>
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbHist }}">Salvar</button>
                 <a href="#" data-hs="1" onClick="{{ nav.h1 }}" style="font-size:13px;">Cancelar</a>
               </div>
             </div>
@@ -1345,7 +1575,7 @@
               </div>
               <div style="font-size:12px; color:var(--sds-fg-subtle); margin:22px 0 18px; border-top:1px solid var(--sds-border-subtle); padding-top:16px;">Criado por usuario@empresa.com.br em 29/07/2026 às 07:55. Atualizado por usuario@empresa.com.br em 29/07/2026 às 07:55.</div>
               <div style="display:flex; gap:10px; align-items:center;">
-                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.v1 }}">Salvar</button>
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbVar }}">Salvar</button>
                 <button class="btn btn-secondary">Excluir</button>
                 <button class="btn btn-tertiary" data-hs="1" onClick="{{ nav.v1 }}">Cancelar</button>
               </div>
@@ -1420,12 +1650,17 @@
             <div class="panel">
               <div class="panel-header"><span class="title">Lista de programações de férias</span></div>
               <div style="display:flex; gap:10px; padding:18px 0;">
-                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fe2 }}">Adicionar <i class="fa-solid fa-caret-down"></i></button>
+                <sc-if value="{{ feShowAdd }}" hint-placeholder-val="{{ true }}">
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fe2 }}">Adicionar <i class="fa-solid fa-caret-down"></i></button>
+                </sc-if>
+                <sc-if value="{{ feShowCalc }}" hint-placeholder-val="{{ false }}">
+                  <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbFeriasCalc }}"><i class="fa-solid fa-play"></i>Calcular</button>
+                </sc-if>
                 <button class="btn btn-secondary" disabled="{{ feBtnDisabled }}">Editar</button>
                 <button class="btn btn-secondary" disabled="{{ feBtnDisabled }}">Excluir</button>
                 <button class="btn btn-secondary">Outras ações <i class="fa-solid fa-caret-down"></i></button>
               </div>
-              <dc-import name="TabelaFerias" rows="{{ feRows }}" highlight="{{ feHl }}" menu="{{ feMenu }}" hint-size="100%,520px"></dc-import>
+              <dc-import name="TabelaFerias" rows="{{ feRows }}" highlight="{{ feHl }}" cb-row="{{ feCbRow }}" ac-row="{{ feAcRow }}" on-check="{{ feOnCheck }}" menu-items="{{ feMenuItems }}" live-items="{{ feLiveItems }}" on-pick="{{ feOnPick }}" hint-size="100%,520px"></dc-import>
               <div style="display:flex; align-items:center; justify-content:space-between; padding-top:16px;">
                 <div style="display:flex; align-items:center; gap:6px; font-size:13px;">
                   <span style="padding:6px 10px; color:var(--sds-fg-muted);"><i class="fa-solid fa-angles-left"></i></span>
@@ -1489,7 +1724,7 @@
                 </table>
               </div>
               <div style="display:flex; gap:10px; align-items:center; margin-top:24px; border-top:1px solid var(--sds-border-subtle); padding-top:18px;">
-                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fe3 }}">Salvar</button>
+                <button class="btn btn-primary" data-hs="1" onClick="{{ nav.fbFerias }}">Salvar</button>
                 <button class="btn btn-secondary" disabled="{{ true }}">Excluir</button>
                 <button class="btn btn-tertiary" data-hs="1" onClick="{{ nav.fe1 }}">Cancelar</button>
               </div>
@@ -1544,16 +1779,10 @@
                     <sc-if value="{{ e.detail }}" hint-placeholder-val="{{ false }}">
                       <tr>
                         <td colspan="6" style="background:#e9e9ec; padding:18px 24px;">
-                          <div style="display:grid; grid-template-columns:120px 1fr 1fr; gap:14px 20px; font-size:13px;">
-                            <div style="font-weight:700;">Regra:</div><div>INSS</div>
-                            <div><span style="font-weight:700; margin-right:12px;">Característica:</span>INSS sobre recibo de férias</div>
-                            <div style="font-weight:700;">Base:</div><div><span style="margin-right:26px;">+</span>Acumulador &nbsp;&nbsp;&nbsp; 23 - Base INSS de cálculo</div>
-                            <div style="display:flex; justify-content:space-between;"><span>Valor do evento</span><span>6.400,0000000000</span></div>
-                            <div style="font-weight:700;">Fórmula:</div><div style="grid-column:span 2;">Cálculo Progressivo</div>
-                            <sc-for list="{{ e.detail.lines }}" as="ln" hint-placeholder-count="4">
-                              <div></div><div>{{ ln.txt }}</div><div>{{ ln.note }}</div>
+                          <div style="display:grid; grid-template-columns:230px 1fr 1fr; gap:14px 20px; font-size:13px;">
+                            <sc-for list="{{ e.detail.lines }}" as="ln" hint-placeholder-count="6">
+                              <div style="font-weight:700;">{{ ln.k }}</div><div>{{ ln.a }}</div><div>{{ ln.b }}</div>
                             </sc-for>
-                            <div style="font-weight:700;">Total:</div><div>697,50</div><div></div>
                           </div>
                         </td>
                       </tr>
@@ -1597,11 +1826,14 @@
   </div>
 
   <div style="height:52px; background:#1c1f24; border-top:1px solid #33373f; display:flex; align-items:center; gap:16px; padding:0 20px; flex-shrink:0;">
-    <div data-hs="1" onClick="{{ nav.home }}" style="color:#fff; font-size:12px; padding:7px 14px; border:1px solid #4a4f59; border-radius:4px; cursor:pointer;" style-hover="background:#2b2f36;"><i class="fa-solid fa-grip" style="margin-right:8px;"></i>Jornadas</div>
-    <div data-hs="1" onClick="{{ toggleMenu }}" style="color:#fff; font-size:12px; padding:7px 14px; border:1px solid #4a4f59; border-radius:4px; cursor:pointer;" style-hover="background:#2b2f36;"><i class="fa-solid fa-bars" style="margin-right:8px;"></i>Menu</div>
+    <div onClick="{{ nav.home }}" style="color:#fff; font-size:12px; padding:7px 14px; border:1px solid #4a4f59; border-radius:4px; cursor:pointer;" style-hover="background:#2b2f36;"><i class="fa-solid fa-grip" style="margin-right:8px;"></i>Jornadas</div>
     <div style="flex:1;"></div>
-    <div data-hs="1" onClick="{{ nav.prev }}" style="color:#fff; font-size:12px; padding:7px 16px; border:1px solid #4a4f59; border-radius:4px; cursor:pointer;" style-hover="background:#2b2f36;">Anterior</div>
-    <div data-hs="1" onClick="{{ nav.next }}" style="background:var(--sds-primary); color:#fff; font-size:12px; padding:8px 20px; border-radius:4px; cursor:pointer;" style-hover="background:var(--sds-primary-hover);">Próximo</div>
+    <sc-if value="{{ inJourney }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex; align-items:center; gap:16px;">
+    <div onClick="{{ nav.prev }}" style="color:#fff; font-size:12px; padding:7px 16px; border:1px solid #4a4f59; border-radius:4px; cursor:pointer;" style-hover="background:#2b2f36;">Anterior</div>
+    <div onClick="{{ nav.next }}" style="background:var(--sds-primary); color:#fff; font-size:12px; padding:8px 20px; border-radius:4px; cursor:pointer;" style-hover="background:var(--sds-primary-hover);">Próximo</div>
+    </div>
+    </sc-if>
   </div>
 </div>
 
@@ -1614,7 +1846,7 @@ const MENU = [
   B('Cadastros gerais', [
     B('Pessoas', []), B('Cadastros', []), B('Empresas', []), B('Posições', []),
     B('Colaboradores', [
-      L('Ficha cadastral', 'todo'), L('Desligamentos', 'todo'),
+      L('Ficha cadastral', 'cg1'), L('Desligamentos', 'todo'),
       B('Históricos', [
         L('Afastamentos','todo'), L('Anotações','todo'), L('Cargos','todo'), L('Centros de custo','todo'),
         L('Contas bancárias','todo'), L('Crachás','todo'), L('Escalas','todo'), L('Filiais','todo'),
@@ -1663,11 +1895,11 @@ const MENU = [
 
 const JOURNEYS = [
   ['01','Programar e calcular rescisão','Rescisão › Programações › cálculo › demonstrativo', ['r3','r4','r5','r6','r7','r8','r9'], [2,3]],
-  ['02','Lançar eventos variáveis','Lançamentos › Lançamentos variáveis › novo lançamento', ['v1','v2'], [2,0]],
+  ['02','Lançar eventos variáveis','Lançamentos › Lançamentos variáveis › novo lançamento', ['v1','v2','v3'], [2,0]],
   ['03','Importar planilha de variáveis','Lançamentos › Importação de variáveis › importar', ['i1','i2','i3'], [2,0]],
   ['04','Calcular uma folha','Cálculos › Calcular folha › processar', ['f1','f2'], [2,6]],
   ['05','Conferir demonstrativo / holerite','Ficha financeira › Demonstrativo de pagamento › ficha financeira', ['d1','d2','d3'], [2,4]],
-  ['06','Programar e calcular férias','Férias › Programações › nova programação › cálculo › recibo', ['fe1','fe2','fe3','fe4','fe5','fe6'], [2,7]],
+  ['06','Programar e calcular férias','Férias › Programações › nova programação › cálculo › recibo', ['fe1','fe2','fe3','fe4','fe5','fe6','fe7','fe7'], [2,7]],
   ['07','Alteração / reajuste salarial','Cadastros gerais › Colaboradores › Históricos › Salariais', ['h1','h2'], [0,4,2]],
   ['08','Definições do eSocial','eSocial › Definições do eSocial › abas › categorias opcionais', ['e1','e2','e3','e4','e5','e6'], [2,8]],
   ['09','Definições do eDocs','eSocial › Definições do eDocs › empresa', ['ed1','ed2','ed3','ed4'], [2,8]],
@@ -1675,11 +1907,12 @@ const JOURNEYS = [
   ['11','Envio e monitoramento','eSocial › Envio de leiautes › acompanhamento', ['en1','en2'], [2,8]],
   ['12','Fechamento de periódicos','eSocial › Fechamento/Reabertura › fechar período', ['fc1','fc2','fc3'], [2,8]],
   ['13','Contabilização','Contábil › Processamento contábil › processar', ['c1','c2'], [2,5]],
-  ['14','Integração Wiipo','Integrações › Wiipo › ativação › empresas › colaboradores › holerites › configurações', ['w1','w2','w3','w4','w5'], [2,9]]
+  ['14','Integração Wiipo','Integrações › Wiipo › ativação › empresas › colaboradores › holerites › configurações', ['w1','w2','w3','w4','w5'], [2,9]],
+  ['15','Ficha cadastral do colaborador','Cadastros gerais › Colaboradores › Ficha cadastral › editar', ['cg1','cg2','cg3'], [0,4]]
 ];
 
 const SCREEN_TITLES = {
-  todo:'Menu', v1:'Lançamentos variáveis', v2:'Lançamentos variáveis',
+  todo:'Menu', v1:'Lançamentos variáveis', v2:'Lançamentos variáveis', v3:'Lançamentos variáveis',
   i1:'Importação de lançamentos variáveis', i2:'Importação de lançamentos variáveis', i3:'Importação de lançamentos variáveis',
   f1:'Calcular folha', f2:'Calcular folha', d1:'Demonstrativo de pagamento', fe1:'Programações de férias',
   d2:'Demonstrativo de pagamento', d3:'Demonstrativo de pagamento',
@@ -1691,19 +1924,60 @@ const SCREEN_TITLES = {
   fc2:'Fechamento/Reabertura de periódicos', fc3:'Fechamento/Reabertura de periódicos',
   g1:'Geração de leiautes do eSocial', en1:'Envio de leiautes',
   fc1:'Fechamento/Reabertura de periódicos', c1:'Processamento contábil', c2:'Processamento contábil', w1:'Integração Wiipo',
-  w2:'Integração Wiipo', w3:'Integração Wiipo', w4:'Integração Wiipo', w5:'Integração Wiipo'
+  w2:'Integração Wiipo', w3:'Integração Wiipo', w4:'Integração Wiipo', w5:'Integração Wiipo',
+  cg1:'Colaboradores', cg2:'Colaboradores', cg3:'Jornada da admissão'
 };
 
-const BUILT = ['r3','r4','r5','r6','r7','r8','r9','v1','v2','i1','i2','i3','f1','f2','fe1','fe2','fe3','fe4','fe5','fe6','d1','d2','d3','h1','h2','e1','e2','e3','e4','e5','e6','ed1','ed2','ed3','ed4','g1','g2','en1','en2','fc1','fc2','fc3','c1','c2','w1','w2','w3','w4','w5'];
+const CG_ROWS = [
+  ['965','Colaborador 01','Auxiliar administrativo','Empregado - Geral','5','20/07/2026','Empresa 01','3','Filial 01'],
+  ['653','Colaborador 02','Auxiliar administrativo','Empregado - Geral','5','13/07/2026','Empresa 01','3','Filial 01'],
+  ['4321','Colaborador 03','Auxiliar administrativo','Empregado - Geral','5','01/06/2026','Empresa 01','3','Filial 01'],
+  ['1500','Colaborador 04','Professor de inglês','Aprendiz','1','13/04/2026','Empresa 01','3','Filial 01'],
+  ['78','Colaborador 05','Auxiliar administrativo','Empregado - Geral','5','13/04/2026','Empresa padrão','1','Filial padrão'],
+  ['256','Colaborador 06','Auxiliar administrativo','Aprendiz','1','09/03/2026','Empresa 02','2','Filial 02'],
+  ['5009','Colaborador 07','Auxiliar administrativo','Empregado - Geral','5','01/03/2026','Empresa 01','3','Filial 01'],
+  ['8899','Colaborador 08','Auxiliar administrativo','Aprendiz','1','03/02/2026','Empresa 01','3','Filial 01']
+];
+
+const CG_FORM = [
+  ['Básicos','repeat(4,1fr)',[
+    ['Nome completo','Colaborador 01',true],['Apelido','Colab',false],
+    ['Sexo','Feminino',true,'caret'],['Nascimento','31/03/1990',true,'date'],
+    ['Nome filiação 1','',false],['Grau de parentesco 1','',false,'caret','Selecione o grau de parentesco 1'],
+    ['Nome filiação 2','',false],['Grau de parentesco 2','',false,'caret','Selecione o grau de parentesco 2']
+  ]],
+  ['Complementares','repeat(4,1fr)',[
+    ['Estado civil','1 - Solteiro',true,'caret'],['Grau de instrução','8 - Educação superior incompleta',true,'caret'],
+    ['Nacionalidade','1058 - Brasil',true,'search'],['Religião','',false],
+    ['Raça / Cor','1 - Branca',true,'caret'],['Nome social','',false]
+  ]],
+  ['Local de nascimento','repeat(3,1fr)',[
+    ['País','1058 - Brasil',true,'search'],['Estado','SC - Santa Catarina',true,'search'],['Cidade','4202404 - Blumenau',true,'search']
+  ]],
+  ['Endereço','repeat(4,1fr)',[
+    ['CEP','89.046-572',true,'search'],['Código postal','',false],
+    ['País','1058 - Brasil',true,'search',null,true],['Estado','SC - Santa Catarina',true,'search',null,true],
+    ['Cidade','4202404 - Blumenau',true,'search',null,true],['Bairro','Velha Central',false],
+    ['Distrito','',false],['Endereço','Rua Arnoldo Régis',true],
+    ['Número','55',true],['Complemento','',false]
+  ]],
+  ['Telefone','repeat(4,1fr)',[
+    ['Telefone','',false],['Ramal','',false],['Telefone 2','',false],['Ramal 2','',false]
+  ]],
+  ['E-mail','repeat(4,1fr)',[['E-mail','',false]]]
+];
+
+const BUILT = ['r3','r4','r5','r6','r7','r8','r9','v1','v2','v3','i1','i2','i3','f1','f2','fe1','fe2','fe3','fe4','fe5','fe6','fe7','d1','d2','d3','h1','h2','e1','e2','e3','e4','e5','e6','ed1','ed2','ed3','ed4','g1','g2','en1','en2','fc1','fc2','fc3','c1','c2','w1','w2','w3','w4','w5','cg1','cg2','cg3'];
 
 const LV_COLS = ['Empresa','Nome empresa','Colaborador','Nome do colaborador','Evento','Nome do evento','Código de cálculo','Competência','Referência'];
 const LV_ROWS = [['1','Empresa 01','1.234','Colaborador 01','333','Hora extras 100%','21.129 - Folha mensal','03/2026','25,00']];
+const LV_NEW = ['1','Empresa 01','1.234','Colaborador 01','288','Comissões','21.129 - Folha mensal','03/2026','1,00'];
 const FORM_LV = [
   ['Colaborador *','1 - Empresa 01 - 1234 - Colaborador 01','search','auto'],
   ['Código de cálculo *','21129 - Folha mensal - 03/2026','search','auto'],
-  ['Evento *','333 - Hora extras 100%','search','auto'],
-  ['Referência *','25,00','','auto'],
-  ['Valor *','R$0,00','','span 1']
+  ['Evento *','288 - Comissões','search','auto'],
+  ['Referência *','1,00','','auto'],
+  ['Valor *','R$ 500,00','','span 1']
 ];
 const IMP_COLS = ['Empresa','Colaborador','Nome do colaborador','Evento','Competência','Referência'];
 const IMP_ROWS = [['1','1.234','Colaborador 01','333 - Hora extras 100%','03/2026','25,00']];
@@ -1819,8 +2093,30 @@ const FE2_COLS = [
 const RECIBO_EVENTS = [
   {name:'100 - Horas de férias diurnas', tipo:'Provento', ref:'220,00', prov:'4.800,00', desc:''},
   {name:'101 - 1/3 de férias', tipo:'Provento', ref:'0,00', prov:'1.600,00', desc:''},
-  {name:'502 - INSS sobre férias', tipo:'Desconto', ref:'14,00', prov:'', desc:'697,50', key:'inss'},
-  {name:'503 - IRRF sobre férias', tipo:'Desconto', ref:'27,50', prov:'', desc:'557,80'}
+  {name:'502 - INSS sobre férias', tipo:'Desconto', ref:'14,00', prov:'', desc:'697,50', key:'feInss'},
+  {name:'503 - IRRF sobre férias', tipo:'Desconto', ref:'27,50', prov:'', desc:'557,80', key:'feIrrf'}
+];
+
+const INSS_DETAIL = [
+  ['Regra:','INSS','Característica:   INSS sobre recibo de férias'],
+  ['Base:','Acumulador   23 - Base INSS de cálculo','Valor do evento   6.400,0000000000'],
+  ['Fórmula:','Cálculo Progressivo','']
+];
+
+const IRRF_DETAIL = [
+  ['Regra:','IRRF','Característica:   IRRF sobre recibo de férias'],
+  ['Base:','Acumulador   26 - Base IR férias do cálculo','Valor do evento   6.400,0000000000'],
+  ['Base com deduções legais:','6.400,0000000000','Total de deduções legais:   0,0000000000'],
+  ['Base com dedução simplificada:','5.792,8000000000','Dedução simplificada:   607,2000000000'],
+  ['Fórmula:','Valor da base * % IRRF da faixa - parcela a deduzir',''],
+  ['','5.792,8000000000 * 27,5000000000% - 908,7300000000',''],
+  ['','Valor do IRRF = 684,2900000000',''],
+  ['','Valor da tabela de redução - (base de cálculo sem deduções * fator de redução)',''],
+  ['','978,6200000000 - (6.400,0000000000 * 0,1331450000)',''],
+  ['','Valor da redução = 126,4900000000',''],
+  ['','Valor do IRRF - valor da redução',''],
+  ['','684,2900000000 - 126,4900000000','No resultado do cálculo é aplicado o arredondamento'],
+  ['Total:','557,80','']
 ];
 
 const INSS_LINES = [
@@ -1843,6 +2139,10 @@ const DP_EVENTS = [
   {name:'1 - Horas normais', tipo:'Provento', ref:'115,33', prov:'1.048,48', desc:''},
   {name:'2 - Horas DSR', tipo:'Provento', ref:'22,00', prov:'200,00', desc:''},
   {name:'5 - Auxílio maternidade', tipo:'Provento', ref:'82,67', prov:'751,52', desc:''},
+  {name:'333 - Horas extras 100%', tipo:'Provento', ref:'25,00', prov:'227,27', desc:'', key:'dpHe',
+   detail:{regra:'Horas extras', caract:'Horas extras com adicional de 100%', base:'12 - Base de horas extras', valor:'9,0909090909',
+     formula:'Valor hora * quantidade de horas * (1 + % adicional)',
+     conta:'9,0909090909 * 25,0000000000 * 200,0000000000% = 227,2727272725', total:'227,27'}},
   {name:'507 - Troco do mês', tipo:'Provento', ref:'0,00', prov:'0,15', desc:''},
   {name:'500 - INSS mensal', tipo:'Desconto', ref:'9,00', prov:'', desc:'155,68', key:'dpInss',
    detail:{regra:'INSS', caract:'INSS', base:'23 - Base INSS de cálculo', valor:'2.000,1500000000',
@@ -1929,7 +2229,7 @@ const FECH_ROWS = [
 const BADGE = { Provento:'green', Desconto:'red', Informativa:'blue' };
 
 class Component extends DCLogic {
-  state = { screen: 'home', path: [], menuOpen: true, journey: null, open: null };
+  state = { screen: 'home', path: [], menuOpen: false, journey: null, open: null, fb: null, toast: false };
 
   nodeAt(path) {
     let list = MENU, node = null;
@@ -1937,14 +2237,20 @@ class Component extends DCLogic {
     return { node, list };
   }
 
-  go(id) { return () => this.setState({ screen: id, open: null }); }
+  go(id) { return () => this.setState({ screen: id, open: null, fb: null, toast: false }); }
+
+  // finaliza um processo/salvamento: navega e publica o feedback contextual
+  fbTo(id, kind, text) {
+    return () => this.setState({ screen: id, open: null, fb: { kind, text, proc: kind === 'proc' }, toast: true });
+  }
 
   // linhas expansíveis: o passo da jornada define o estado inicial, mas o usuário pode abrir/fechar livremente
   defaultOpen(sc) {
     const d = {};
     if (sc === 'r8' || sc === 'r9') d.fgts = true;
     if (sc === 'r9') d.inss = true;
-    if (sc === 'fe6') d.feInss = true;
+    if (sc === 'fe7') { d.feInss = true; d.feIrrf = true; }
+    if (sc === 'd3') d.dpHe = true;
     return d;
   }
 
@@ -2039,8 +2345,13 @@ class Component extends DCLogic {
     });
 
     const mkRows = rows => rows.map(r => ({ cells: r.slice(0, 7), status: r[7] }));
-    const calcRows = RESC_ROWS.map((r, idx) => idx === 1 ? [...r.slice(0, 7), 'Calculada'] : r);
-    const onRescAction = label => { if (label === 'Calcular') this.go('r6')(); else if (label === 'Demonstrativo de rescisão') this.go('r7')(); };
+    const rescBase = RESC_ROWS.slice(2);
+    const newProg = [...RESC_ROWS[0].slice(0, 7), 'Programada'];
+    const newCalc = [...RESC_ROWS[0].slice(0, 7), 'Calculada'];
+    const onRescAction = label => {
+      if (label === 'Calcular') this.fbTo('r6', 'proc', 'O cálculo da rescisão foi iniciado. Você será notificado quando o processo finalizar, o andamento estará disponível na tela de logs de processo. Para acessar')();
+      else if (label === 'Demonstrativo de rescisão') this.go('r7')();
+    };
 
     const openMap = this.openMap();
     const demoRows = DEMO_EVENTS.map(e => {
@@ -2071,12 +2382,17 @@ class Component extends DCLogic {
     ].map(([label, value]) => ({ label, value }));
 
     const feMk = rows => rows.map(r => ({ cells: r.slice(0, 10), status: r[10] }));
-    const feSrc = { fe1: FE_A, fe2: FE_A, fe3: FE_B, fe4: FE_C }[sc] || FE_A;
-    const feRows = feMk(feSrc);
-    const feHl = sc === 'fe3' ? 7 : (sc === 'fe4' ? 5 : -1);
-    const feMenu = sc === 'fe3'
-      ? { items: ['Calcular'], onPick: this.go('fe4') }
-      : (sc === 'fe4' ? { items: ['Recibo de férias','Excluir cálculo'], onPick: this.go('fe5') } : null);
+    const feProg = ['1','Empresa 01','101','Colaborador 02','19/11/2024','18/11/2025','01/09/2026','30/09/2026','30,00','0,00','Programada'];
+    const feCalc = [...feProg.slice(0, 10), 'Calculada'];
+    const feBase = FE_A.slice(1);
+    const feSaved = ['fe3','fe4','fe5'].includes(sc);
+    const feDone = sc === 'fe5';
+    const feRows = feMk(feSaved ? [feDone ? feCalc : feProg, ...feBase] : FE_A);
+    const feHl = (sc === 'fe4' || sc === 'fe5') ? 0 : -1;
+    const feCbRow = feSaved ? 0 : -1;
+    const feAcRow = feDone ? 0 : -1;
+    const feOnCheck = feSaved ? this.go(sc === 'fe3' ? 'fe4' : 'fe3') : null;
+    const feOnPick = feDone ? this.go('fe6') : null;
 
     const reciboHeader = [
       ['Período aquisitivo','19/11/2024 - 18/11/2025'], ['Dias de férias','30,00'], ['Data de retorno','01/10/2026'],
@@ -2120,13 +2436,12 @@ class Component extends DCLogic {
       const first = idx === 0;
       return {
         leiaute, empresa, aguardando, processando, dependencia, erro,
-        checked: first && sc === 'g2',
-        cbClass: (first && sc === 'g2') ? 'on' : '',
-        hs: first ? '1' : null,
-        cursor: first ? 'pointer' : 'default',
-        onToggle: first ? this.go(sc === 'g2' ? 'g1' : 'g2') : null
+        checked: sc === 'g2',
+        cbClass: sc === 'g2' ? 'checked' : ''
       };
     });
+
+    const gerAllChecked = sc === 'g2';
 
     const envRows = ENV_ROWS.map(([leiaute, criacao, indicativo, referencia, empresa, colaborador, resumo, situacao, badgeClass], idx) => {
       const pend = idx === 2, last = idx === ENV_ROWS.length - 1;
@@ -2154,21 +2469,56 @@ class Component extends DCLogic {
       };
     });
 
+    const RECIBO_DETAILS = { feInss: [...INSS_DETAIL, ...INSS_LINES.map(([txt, note]) => ['', txt, note]), ['Total:','697,50','']], feIrrf: IRRF_DETAIL };
     const reciboRows = RECIBO_EVENTS.map(e => {
-      const can = e.key === 'inss';
-      const open = can && !!openMap.feInss;
+      const can = !!e.key;
+      const open = can && !!openMap[e.key];
       return {
         toggle: open ? '—' : '+', name: e.name,
         bg: open ? 'var(--sds-bg-hover)' : 'var(--sds-bg-surface)',
         tipo: e.tipo, badgeClass: BADGE[e.tipo] || 'gray',
         ref: e.ref, prov: e.prov, desc: e.desc,
-        onToggle: can ? this.toggleRow('feInss') : null, hs: can ? '1' : null,
+        onToggle: can ? this.toggleRow(e.key) : null, hs: can ? '1' : null,
         toggleCursor: can ? 'pointer' : 'default',
-        detail: open ? { lines: INSS_LINES.map(([txt, note]) => ({ txt, note })) } : null
+        detail: open ? { lines: RECIBO_DETAILS[e.key].map(([k, a, b]) => ({ k, a, b })) } : null
       };
     });
 
+    const cgRows = CG_ROWS.map(([cadastro, nome, cargo, vinculo, vinculoCod, admissao, empresa, empresaCod, filial], idx) => ({
+      cadastro, nome, cargo, vinculo, vinculoCod, admissao, empresa, empresaCod, filial,
+      menuOpen: sc === 'cg2' && idx === 0,
+      hs: (idx === 0 && sc === 'cg1') ? '1' : null,
+      onAcoes: idx === 0 ? (sc === 'cg2' ? this.go('cg1') : this.go('cg2')) : null
+    }));
+
+    const cgGroups = CG_FORM.map(([title, cols, fields]) => ({
+      title, cols,
+      fields: fields.map(([labelText, value, required, affix, placeholder, disabled]) => ({
+        labelText, value, required, placeholder: placeholder || '',
+        shellClass: disabled ? 'disabled' : '',
+        affixSearch: affix === 'search', affixDate: affix === 'date', affixCaret: affix === 'caret'
+      }))
+    }));
+
+    const fb = this.state.fb;
     return {
+      cgRows, cgGroups,
+      swObsClass: this.state.swObs ? 'on' : '',
+      swHorClass: this.state.swHor ? 'on' : '',
+      toggleObs: () => this.setState(s => ({ swObs: !s.swObs })),
+      toggleHor: () => this.setState(s => ({ swHor: !s.swHor })),
+      gerAllChecked, gerAllClass: gerAllChecked ? 'checked' : '',
+      gerAllHs: ['g1','g2'].includes(sc) ? '1' : null,
+      gerAllCursor: ['g1','g2'].includes(sc) ? 'pointer' : 'default',
+      gerAllToggle: this.go(sc === 'g2' ? 'g1' : 'g2'),
+      fb, fbText: fb ? fb.text : '', fbProc: fb ? fb.proc : false,
+      fbBg: (fb && fb.proc) ? '#EAF3FA' : '#EAF7F1',
+      fbBar: (fb && fb.proc) ? 'var(--sds-primary)' : 'var(--sds-criticality-green)',
+      fbIcon: (fb && fb.proc) ? 'fa-solid fa-circle-info' : 'fa-solid fa-circle-check',
+      toastProc: !!this.state.toast && !!(fb && fb.proc),
+      toastOk: !!this.state.toast && !!(fb && !fb.proc),
+      toastOkText: (fb && fb.toast) || 'Registro(s) salvo(s) com sucesso.',
+      inJourney: sc !== 'home',
       menuOpen,
       menuTitle: node ? node.label : 'Menu',
       menuItems,
@@ -2178,9 +2528,10 @@ class Component extends DCLogic {
       journeys,
       s: {
         home: S('home'), todo: !BUILT.includes(sc) && sc !== 'home',
+        cgList: sc === 'cg1' || sc === 'cg2', cg3: S('cg3'),
         r3: S('r3'), r4: S('r4'), r5: S('r5'), r6: S('r6'), r9: S('r9'),
         demo: ['r7','r8','r9'].includes(sc),
-        v1: S('v1'), v2: S('v2'),
+        v1: sc === 'v1' || sc === 'v3', v2: S('v2'),
         calc: ['f1','f2'].includes(sc), calcModal: S('f2'),
         imp: ['i1','i2','i3'].includes(sc),
         impFile: ['i2','i3'].includes(sc), impDone: S('i3'), impEmpty: ['i1','i2'].includes(sc),
@@ -2196,24 +2547,30 @@ class Component extends DCLogic {
         cont: ['c1','c2'].includes(sc), c1: S('c1'),
         wiipo: ['w1','w2','w3','w4','w5'].includes(sc),
         w1: S('w1'), w2: S('w2'), w3: S('w3'), w4: S('w4'), w5: S('w5'),
-        feList: ['fe1','fe3','fe4'].includes(sc), fe2: S('fe2'),
-        recibo: ['fe5','fe6'].includes(sc)
+        feList: ['fe1','fe3','fe4','fe5'].includes(sc), fe2: S('fe2'),
+        recibo: ['fe6','fe7'].includes(sc)
       },
-      feRows, feHl, feMenu, reciboHeader, reciboRows,
-      feCount: (sc === 'fe3' || sc === 'fe4') ? 16 : 15,
-      feBtnDisabled: sc === 'fe1',
+      feRows, feHl, feCbRow, feAcRow, feOnCheck, feOnPick,
+      feMenuItems: ['Recibo de férias','Excluir cálculo'],
+      feLiveItems: ['Recibo de férias'],
+      feShowAdd: !(sc === 'fe4' || sc === 'fe5'),
+      feShowCalc: sc === 'fe4',
+      reciboHeader, reciboRows,
+      feCount: feSaved ? 16 : 15,
+      feBtnDisabled: !(sc === 'fe4' || sc === 'fe5'),
       fe2Cols: FE2_COLS.map(([label, icon]) => ({ label, icon, iconStyle: icon === 'circle-info' ? 'solid' : 'regular' })),
       todoTitle: SCREEN_TITLES[sc] || 'Tela',
-      rescisaoRows: mkRows(RESC_ROWS),
-      rescisaoRowsCalc: mkRows(calcRows),
+      rescisaoRowsBefore: mkRows(rescBase),
+      rescisaoRows: mkRows([newProg, ...rescBase]),
+      rescisaoRowsCalc: mkRows([newCalc, ...rescBase]),
       noHl: -1, hlIdx: 3, noMenu: null,
       processarHs: sc === 'f2' ? null : '1',
-      onRescAction, rescInteractive: [0, 1],
+      onRescAction, rescInteractive: [0], rescNone: [],
       lvCols: LV_COLS,
-      lvRows: LV_ROWS.map(cells => ({ cells })),
+      lvRows: (sc === 'v3' ? [...LV_ROWS, LV_NEW] : LV_ROWS).map(cells => ({ cells })),
       impCols: IMP_COLS,
       impRows: IMP_ROWS.map(cells => ({ cells })),
-      importar: { disabled: sc === 'i1', hs: sc === 'i1' ? null : '1', onClick: sc === 'i1' ? () => {} : this.go('i3') },
+      importar: { disabled: sc === 'i1', hs: sc === 'i1' ? null : '1', onClick: sc === 'i1' ? () => {} : this.fbTo('i3', 'proc', 'A importação do arquivo de lançamentos variáveis foi iniciada. Você será notificado quando o processo finalizar, o andamento estará disponível na tela de logs de processo. Para acessar') },
       formVariavel: FORM_LV.map(([label, value, kind, span]) => ({
         labelText: label.replace(' *', ''), required: label.endsWith(' *'),
         value, search: kind === 'search', span
@@ -2241,7 +2598,27 @@ class Component extends DCLogic {
         onClick: this.go(id)
       })),
       nav: {
-        home: () => this.setState({ screen:'home', path:[], menuOpen:false, journey:null, open:null }),
+        home: () => this.setState({ screen:'home', path:[], menuOpen:false, journey:null, open:null, fb:null, toast:false }),
+        closeFb: () => this.setState({ fb: null }),
+        closeToast: () => this.setState({ toast: false }),
+        fbCg3: this.fbTo('cg1', 'ok', 'Colaborador salvo com sucesso.'),
+        fbRescSave: this.fbTo('r5', 'ok', 'Rescisão salva com sucesso.'),
+        fbRescCalc: this.fbTo('r5', 'proc', 'O cálculo da rescisão foi iniciado. Você será notificado quando o processo finalizar, o andamento estará disponível na tela de logs de processo. Para acessar'),
+        fbFolha: this.fbTo('f1', 'proc', 'O processo foi iniciado. Você será notificado quando o processo finalizar, o andamento estará disponível na tela de logs de processo. Para acessar'),
+        fbFech: this.fbTo('fc3', 'proc', 'O fechamento da folha foi iniciado. Você será notificado quando o processo finalizar, o andamento estará disponível na tela de logs de processo. Para acessar'),
+        fbEsoc: this.fbTo('e1', 'ok', 'Configuração do eSocial salva com sucesso.'),
+        fbEsocLeiaute: this.fbTo('e5', 'ok', 'Leiaute do eSocial salvo com sucesso.'),
+        fbEdocs: this.fbTo('ed1', 'ok', 'Configuração do eDocs salva com sucesso.'),
+        fbEdocsTipo: this.fbTo('ed4', 'ok', 'Tipo de documento salvo com sucesso.'),
+        fbGeracao: this.fbTo('g2', 'proc', 'A geração dos leiautes marcados foi iniciada. Você será notificado quando o processo finalizar, o andamento estará disponível na tela de logs de processo. Para acessar'),
+        fbWiipo: this.fbTo('w5', 'ok', 'Configurações da integração Wiipo salvas com sucesso.'),
+        fbContabil: this.fbTo('c2', 'proc', 'O processamento contábil foi iniciado. Você será notificado quando o processo finalizar, o andamento estará disponível na tela de logs de processo. Para acessar'),
+        fbHist: this.fbTo('h1', 'ok', 'Histórico eventual salvo com sucesso.'),
+        fbVar: this.fbTo('v3', 'ok', 'Lançamento variável do evento 288 - Comissões salvo com sucesso.'),
+        fbImport: this.fbTo('i3', 'proc', 'A importação do arquivo de lançamentos variáveis foi iniciada. Você será notificado quando o processo finalizar, o andamento estará disponível na tela de logs de processo. Para acessar'),
+        fbFerias: this.fbTo('fe3', 'ok', 'Programação de férias salva com sucesso.'),
+        fbFeriasCalc: this.fbTo('fe5', 'ok', 'Cálculo das férias concluído com sucesso. O recibo de férias já pode ser consultado pelo menu Ações.'),
+        cg3: this.go('cg3'),
         r4: this.go('r4'), r5: this.go('r5'),
         v1: this.go('v1'), v2: this.go('v2'), i2: this.go('i2'),
         f1: this.go('f1'), f2: this.go('f2'), d3: this.go('d3'),
